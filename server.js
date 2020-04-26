@@ -67,6 +67,12 @@ app.use(authsMiddleware);
 
 // Routes
 
+// Catch 404s
+app.use((req, res, next) => {
+  res.statusCode = 404;
+   res.json(status.getStatus('url_missing'));
+});
+
 // Global error handler
 app.use((err, req, res, next) => {
     if (err) {

@@ -12,6 +12,14 @@ const getStatus = (code) => {
             };
             break;
 
+      case 'url_missing':
+        status = {
+          code: code,
+          error: true,
+          message: 'URL not found'
+        };
+        break;
+
         case 'generic_fail':
         default:
             status = {
