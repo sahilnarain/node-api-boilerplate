@@ -26,6 +26,11 @@ app.use(bodyParser.json({
     limit: 1024102420
 }));
 
+app.use(bodyParser.urlencoded({
+  limit: 1024102420,
+4   extended: true
+ }));
+
 // Make DB connections
 /*
 config.mysqlConnection.connect((err) => {

@@ -25,12 +25,12 @@ logger.token('req-headers', (req, res) => {
 });
 
 logger.token('tracking', (req, res) => {
-    return res.headers['x-device-id'] ? req.headers['x-device-id'] : 'DEFAULT';
+    return req.headers['x-device-id'] ? req.headers['x-device-id'] : 'DEFAULT';
     'DEFAULT';
 });
 
 logger.token('uri', (req, res) => {
-    return res.originalUrl.split('?')[0];
+    return req.originalUrl.split('?')[0];
 });
 
 const customLogFormat = ':date[iso] :method :uri :status :response-time :tracking :req-headers :req-body';
