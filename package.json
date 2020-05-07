@@ -1,47 +1,49 @@
 {
-    "name": "node-api-boilerplate",
-    "version": "1.0.0",
-    "description": "Boilerplate code for NodeJS APIs",
-    "main": "server.js",
-    "directories": {
-        "doc": "docs",
-        "test": "tests"
-    },
-    "dependencies": {
-        "body-parser": "^1.19.0",
-        "express": "^4.17.1",
-        "morgan": "^1.10.0",
-        "mysql": "^2.18.1"
-    },
-    "devDependencies": {
-        "husky": "^4.2.5",
-        "jest": "^25.4.0",
-        "js-beautify": "^1.11.0"
-    },
-    "scripts": {
-        "test": "npm test",
-        "start": "node server.js",
-        "beautify": "find . \\( -name node_modules -o -name docs -o -name scripts \\) -prune -o -name '*.js*' -print | xargs -I % sh -c './node_modules/js-beautify/js/bin/js-beautify.js --config ./.jsbeautifyrc %; git add % > /dev/null'"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "git stash -k -u > /dev/null && npm run beautify > /dev/null",
-            "post-commit": "git stash pop > /dev/null"
-        }
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/sahilnarain/node-api-boilerplate"
-    },
-    "keywords": [
-        "api",
-        "node",
-        "boilerplate"
-    ],
-    "author": "Sahil Narain",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/sahilnarain/node-api-boilerplate"
-    },
-    "homepage": "https://github.com/sahilnarain/node-api-boilerplate"
+  "name": "node-api-boilerplate",
+  "version": "1.0.0",
+  "description": "Boilerplate code for NodeJS APIs",
+  "main": "server.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "husky": "^4.2.5",
+    "jest": "^25.4.0",
+    "js-beautify": "^1.11.0",
+    "pkg": "^4.4.8"
+  },
+  "scripts": {
+    "test": "npm test",
+    "start": "node server.js",
+    "beautify": "find . \\( -name node_modules -o -name docs -o -name scripts \\) -prune -o -name '*.js*' -print | xargs -I % sh -c './node_modules/js-beautify/js/bin/js-beautify.js --config ./.jsbeautifyrc %; git add % > /dev/null'",
+    "dist": "./scripts/pkg/dist.sh"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "git stash -k -u > /dev/null && npm run beautify > /dev/null",
+      "post-commit": "git stash pop > /dev/null"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sahilnarain/node-api-boilerplate"
+  },
+  "keywords": [
+    "api",
+    "node",
+    "boilerplate"
+  ],
+  "author": "Sahil Narain",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sahilnarain/node-api-boilerplate"
+  },
+  "homepage": "https://github.com/sahilnarain/node-api-boilerplate"
 }
