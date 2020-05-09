@@ -1,7 +1,7 @@
 'use strict';
 
 const middleware = (req, res, next) => {
-    return next();
+  return next();
 };
 
 module.exports = middleware;
