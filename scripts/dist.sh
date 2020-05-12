@@ -1,4 +1,14 @@
-sed -i .bak "s/\${process.env.NODE_ENV}/"$NODE_ENV"/g" app/configs/config.js && sed -i .bak "s/\`/\'/g" app/configs/config.js
+files=(server.js app/configs/config.js)
+
+for file in "${files[@]}"
+do
+  sed -i .bak -e "s/\`\(.*\)\${process.env.NODE_ENV}\(.*\)\`/\'\1"$NODE_ENV"\2\'/g" "$file"
+  rm "$file".bak
+done
+
 ./node_modules/pkg/lib-es5/bin.js server.js --config package.json --out-path ./dist
-rm app/configs/config.js.bak
-git checkout app/configs/config.js
+
+for file in "${files[@]}"
+do
+ git checkout "$file"
+done
