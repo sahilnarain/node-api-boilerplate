@@ -1,4 +1,20 @@
-files=(server.js app/configs/config.js)
+unstaged_files=($(git diff --name-only))
+
+if [ ${#unstaged_files[@]} -gt 0 ]
+then
+  echo 'Unsafe - stash unstaged files to avoid losing changes';
+  exit 1
+fi
+
+environment_files=($(grep -rl "process.env.NODE_ENV === '$NODE_ENV'" app/* *.js*))
+
+for file in "${environment_files[@]}"
+do
+  sed -i .bak -e "s/process.env.NODE_ENV === '$NODE_ENV'/true/g" "$file"
+  rm "$file".bak
+done
+
+files=($(grep -rl "process.env.NODE_ENV" app/* *.js*))
 
 for file in "${files[@]}"
 do
@@ -7,6 +23,11 @@ do
 done
 
 ./node_modules/pkg/lib-es5/bin.js server.js --config package.json --out-path ./dist
+
+for file in "${environment_files[@]}"
+do
+ git checkout "$file"
+done
 
 for file in "${files[@]}"
 do
