@@ -1,8 +1,10 @@
 unstaged_files=($(git diff --name-only))
 
-if [ ${#unstaged_files[@]} -gt 0 ]
+if [ ${#unstaged_files[@]} -gt 0 ] && [ "$1" != "--force" ] && [ "$1" != "-f" ]
 then
-  echo 'Unsafe - stash unstaged files to avoid losing changes';
+  echo 'Unsafe - stash unstaged files to avoid losing changes, or use -f or --force to continue';
+  echo '  Usage: npm run dist -- [optional] -f|--force ';
+  echo
   exit 1
 fi
 
