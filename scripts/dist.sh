@@ -1,9 +1,15 @@
+if [ "$1" != "--force" ] && [ "$1" != "-f" ]
+then
+  NODE_ENV="$1"
+fi
+
 unstaged_files=($(git diff --name-only))
 
-if [ ${#unstaged_files[@]} -gt 0 ] && [ "$1" != "--force" ] && [ "$1" != "-f" ]
+if [ ${#unstaged_files[@]} -gt 0 ] && [ "${!#}" != "--force" ] && [ "${!#}" != "-f" ]
 then
   echo 'Unsafe - stash unstaged files to avoid losing changes, or use -f or --force to continue';
-  echo '  Usage: npm run dist -- [optional] -f|--force ';
+  echo '  Usage: npm run dist -- [optional] [env] -f|--force ';
+  echo '  Usage: npm run dist -- production --force';
   echo
   exit 1
 fi
