@@ -8,10 +8,12 @@
     "test": "tests"
   },
   "dependencies": {
+    "async": "^3.2.0",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "morgan": "^1.10.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "squel": "^5.13.0"
   },
   "devDependencies": {
     "husky": "^4.2.5",
@@ -20,7 +22,8 @@
     "pkg": "^4.4.8"
   },
   "scripts": {
-    "test": "npm test",
+    "test": "./scripts/tests.sh",
+    "test-server": "NODE_ENV=test;node server.js",
     "start": "node server.js",
     "git-check": "./scripts/npm/git-check.sh",
     "beautify": "./scripts/beautify.sh",
