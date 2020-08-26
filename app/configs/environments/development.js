@@ -16,7 +16,7 @@ const mysqlConnection = mysql.createConnection(mysqlConnectionString);
 const MORGAN_LOG_PATH = `${os.homedir()}/.logs`;
 
 const HEALTHCHECKS = {
-  DEPLOY_BASE_URL: 'https://dev.maruti.xane.ai',
+  DEPLOY_BASE_URL: '',
   URL: 'https://hc-ping.com/uuid'
 };
 
