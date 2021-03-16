@@ -18,7 +18,7 @@ environment_files=($(grep -rl "process.env.NODE_ENV === '$NODE_ENV'" app/* *.js*
 
 for file in "${environment_files[@]}"
 do
-  sed -i .bak -e "s/process.env.NODE_ENV === '$NODE_ENV'/true/g" "$file"
+  sed -i.bak -e "s/process.env.NODE_ENV === '$NODE_ENV'/true/g" "$file"
   rm "$file".bak
 done
 
@@ -26,7 +26,7 @@ files=($(grep -rl "process.env.NODE_ENV" app/* *.js*))
 
 for file in "${files[@]}"
 do
-  sed -i .bak -e "s/\`\(.*\)\${process.env.NODE_ENV}\(.*\)\`/\'\1"$NODE_ENV"\2\'/g" "$file"
+  sed -i.bak -e "s/\`\(.*\)\${process.env.NODE_ENV}\(.*\)\`/\'\1"$NODE_ENV"\2\'/g" "$file"
   rm "$file".bak
 done
 
