@@ -14,7 +14,7 @@ const init = () => {
 
   setInterval(() => {
     request({ url: config.HEALTHCHECKS.DEPLOY_BASE_URL + '/healthchecks', method: 'GET' }, (err, response, body) => {
-      if (response.statusCode === 200 && body === JSON.stringify(status.getStatus('success'))) {
+      if (response && response.statusCode === 200 && body === JSON.stringify(status.getStatus('success'))) {
         request({ url: config.HEALTHCHECKS.URL, method: 'GET' }, (err, response, body) => {
           // Do nothing
         });
