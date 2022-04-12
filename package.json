@@ -17,7 +17,7 @@
     "squel": "^5.13.0"
   },
   "devDependencies": {
-    "husky": "^7.0.1",
+    "husky": "^7.0.0",
     "jest": "^27.0.6",
     "js-beautify": "^1.14.0",
     "pkg": "^5.3.0"
@@ -28,13 +28,8 @@
     "start": "node server.js",
     "git-check": "./scripts/npm/git-check.sh",
     "beautify": "./scripts/beautify.sh",
-    "dist": "./scripts/dist.sh"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "./scripts/husky-pre-commit.sh",
-      "post-commit": "./scripts/husky-post-commit.sh"
-    }
+    "dist": "./scripts/dist.sh",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
