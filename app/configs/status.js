@@ -35,4 +35,4 @@ const getStatus = (code) => {
 
 module.exports = {
   getStatus: getStatus
-}
+};

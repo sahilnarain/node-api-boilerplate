@@ -24,6 +24,6 @@ const config = {
   mysqlConnection: mysqlConnection,
   MORGAN_LOG_PATH: MORGAN_LOG_PATH,
   HEALTHCHECKS: HEALTHCHECKS
-}
+};
 
 module.exports = config;
