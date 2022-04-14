@@ -26,7 +26,6 @@ logger.token('req-headers', (req, res) => {
 
 logger.token('tracking', (req, res) => {
   return req.headers['x-device-id'] ? req.headers['x-device-id'] : 'DEFAULT';
-  'DEFAULT';
 });
 
 logger.token('uri', (req, res) => {
