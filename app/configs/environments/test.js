@@ -19,6 +19,6 @@ const MORGAN_LOG_PATH = `${os.homedir()}/.logs`;
 const config = {
   mysqlConnection: mysqlConnection,
   MORGAN_LOG_PATH: MORGAN_LOG_PATH
-}
+};
 
 module.exports = config;

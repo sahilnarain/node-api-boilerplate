@@ -71,7 +71,7 @@ app.use(loggerConfig.customLogFormat);
 // Stream logs on screen for non-production
 if (isDeveloping) {
   app.use(loggerConfig.devLogStream);
-};
+}
 
 // Use middleware
 app.use(authsMiddleware);
