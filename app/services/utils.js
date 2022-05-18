@@ -16,7 +16,7 @@ const createHierarchy = (input) => {
 
   for (let i = input.length - 1; i >= 0; i--) {
     if (input[i].parent_id) {
-      let _index = input.indexOf(input.filter(inp => inp.id === input[i].parent_id)[0]);
+      let _index = input.indexOf(input.filter((inp) => inp.id === input[i].parent_id)[0]);
 
       if (!input[_index].hasOwnProperty('children')) {
         input[_index].children = [];
@@ -31,7 +31,7 @@ const createHierarchy = (input) => {
 };
 
 const sortByDesc = (key) => {
-  return (array1, array2) => (array1[key] < array2[key]) ? 1 : ((array2[key] < array1[key]) ? -1 : 0);
+  return (array1, array2) => (array1[key] < array2[key] ? 1 : array2[key] < array1[key] ? -1 : 0);
 };
 
 module.exports = {

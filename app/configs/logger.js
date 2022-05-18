@@ -6,9 +6,11 @@ const logger = require('morgan');
 const config = require('app/configs/config');
 
 // Create log file if it doesn't exist
-fs.existsSync(`${config.MORGAN_LOG_PATH}`) ? null : fs.mkdirSync(`${config.MORGAN_LOG_PATH}`, {
-  recursive: true
-});
+fs.existsSync(`${config.MORGAN_LOG_PATH}`)
+  ? null
+  : fs.mkdirSync(`${config.MORGAN_LOG_PATH}`, {
+      recursive: true
+    });
 let _logFile = `${config.MORGAN_LOG_PATH}/morgan.log`;
 fs.existsSync(_logFile) ? null : fs.writeFileSync(_logFile, new Date().toISOString());
 

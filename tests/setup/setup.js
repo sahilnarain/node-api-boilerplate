@@ -10,77 +10,83 @@ const dbSetup = './docs/db/sql-init.sql';
 const dbTeardown = './tests/setup/data/teardown.sql';
 
 const setup = (callback) => {
-  async.waterfall([
-    (cb) => {
-      fs.readFile(dbSetup, (err, result) => {
-        if (err) {
-          return cb(err);
-        }
+  async.waterfall(
+    [
+      (cb) => {
+        fs.readFile(dbSetup, (err, result) => {
+          if (err) {
+            return cb(err);
+          }
 
-        return cb(null, result.toString());
-      });
-    },
+          return cb(null, result.toString());
+        });
+      },
 
-    (dbSetupSql, cb) => {
-      dbSetupSql = dbSetupSql.replace('IF EXISTS boilerplate', 'IF EXISTS boilerplate_test');
-      dbSetupSql = dbSetupSql.replace('DATABASE boilerplate', 'DATABASE boilerplate_test');
-      dbSetupSql = dbSetupSql.replace('USE boilerplate', 'USE boilerplate_test');
+      (dbSetupSql, cb) => {
+        dbSetupSql = dbSetupSql.replace('IF EXISTS boilerplate', 'IF EXISTS boilerplate_test');
+        dbSetupSql = dbSetupSql.replace('DATABASE boilerplate', 'DATABASE boilerplate_test');
+        dbSetupSql = dbSetupSql.replace('USE boilerplate', 'USE boilerplate_test');
 
-      return cb(null, dbSetupSql);
-    },
+        return cb(null, dbSetupSql);
+      },
 
-    (dbSetupSql, cb) => {
-      // config.mysqlConnection.query(dbSetupSql, (err, result) => {
-      //   if (err) {
-      //     return cb(err);
-      //   }
-      //
-      return cb(null);
-      // });
+      (dbSetupSql, cb) => {
+        // config.mysqlConnection.query(dbSetupSql, (err, result) => {
+        //   if (err) {
+        //     return cb(err);
+        //   }
+        //
+        return cb(null);
+        // });
+      }
+    ],
+    (err, result) => {
+      if (err) {
+        return callback(err);
+      }
+
+      return callback(null, result);
     }
-  ], (err, result) => {
-    if (err) {
-      return callback(err);
-    }
-
-    return callback(null, result);
-  });
+  );
 };
 
 const teardown = (callback) => {
-  async.waterfall([
-    (cb) => {
-      fs.readFile(dbTeardown, (err, result) => {
-        if (err) {
-          return cb(err);
-        }
+  async.waterfall(
+    [
+      (cb) => {
+        fs.readFile(dbTeardown, (err, result) => {
+          if (err) {
+            return cb(err);
+          }
 
-        return cb(null, result.toString());
-      });
-    },
+          return cb(null, result.toString());
+        });
+      },
 
-    (teardownSql, cb) => {
-      teardownSql = teardownSql.replace(/boilerplate/g, 'boilerplate_test');
+      (teardownSql, cb) => {
+        teardownSql = teardownSql.replace(/boilerplate/g, 'boilerplate_test');
 
-      return cb(null, teardownSql);
-    },
+        return cb(null, teardownSql);
+      },
 
-    (teardownSql, cb) => {
-      // config.mysqlConnection.query(teardownSql, (err, result) => {
-      //   if (err) {
-      //     return cb(err);
-      //   }
-      //
-      return cb(null, true);
-      // });
+      (teardownSql, cb) => {
+        // config.mysqlConnection.query(teardownSql, (err, result) => {
+        //   if (err) {
+        //     return cb(err);
+        //   }
+        //
+        return cb(null, true);
+        // });
+      }
+    ],
+    (err, result) => {
+      if (err) {
+        return callback(err);
+      }
+
+      return callback(null, result);
     }
-  ], (err, result) => {
-    if (err) {
-      return callback(err);
-    }
-
-    return callback(null, result);
-  });
+  );
 };
 
 module.exports = {
