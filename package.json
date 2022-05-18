@@ -20,8 +20,8 @@
     "eslint": "^8.13.0",
     "husky": "^7.0.0",
     "jest": "^27.0.6",
-    "js-beautify": "^1.14.3",
-    "pkg": "^5.3.0"
+    "pkg": "^5.3.0",
+    "prettier": "^2.6.2"
   },
   "scripts": {
     "test": "./scripts/tests.sh",

@@ -15,7 +15,7 @@ const config = require('app/configs/config');
 const status = require('app/configs/status');
 const loggerConfig = require('app/configs/logger');
 
-const isDeveloping = (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test');
+const isDeveloping = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
 
 app.disable('x-powered-by');
 
@@ -26,14 +26,18 @@ const authsMiddleware = require('app/middlewares/auths');
 const healthchecksRouter = require('app/routes/healthchecks');
 
 // Use JSON body parser
-app.use(bodyParser.json({
-  limit: 1024102420
-}));
+app.use(
+  bodyParser.json({
+    limit: 1024102420
+  })
+);
 
-app.use(bodyParser.urlencoded({
-  limit: 1024102420,
-  extended: true
-}));
+app.use(
+  bodyParser.urlencoded({
+    limit: 1024102420,
+    extended: true
+  })
+);
 
 // Make DB connections
 /*
