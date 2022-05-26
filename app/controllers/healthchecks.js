@@ -1,19 +1,15 @@
 'use strict';
 
 const healthchecksService = require('app/services/healthchecks');
+const wrapperService = require('app/services/wrapper');
 
-const healthchecks = (req, res, next) => {
+const healthchecks = async (req, res, next) => {
   let healthchecksParams = {};
 
-  healthchecksService.healthchecks(healthchecksParams, (err, result) => {
-    if (err) {
-      return next(err);
-    }
-
-    return res.json(result);
-  });
+  let result = await healthchecksService.healthchecks(healthchecksParams);
+  return res.json(result);
 };
 
 module.exports = {
-  healthchecks: healthchecks
+  healthchecks: wrapperService.wrap(healthchecks)
 };
