@@ -5,6 +5,8 @@ const request = require('request');
 const config = require('app/configs/config');
 const status = require('app/configs/status');
 
+const wrapperService = require('app/services/wrapper');
+
 const healthchecksModel = require('app/models/healthchecks');
 
 const init = () => {
@@ -23,23 +25,19 @@ const init = () => {
   }, 30000);
 };
 
-const healthchecks = (params, callback) => {
+const healthchecks = async (params) => {
   let healthchecksParams = {};
+  let result = await healthchecksModel.check(healthchecksParams);
 
-  healthchecksModel.check(healthchecksParams, (err, result) => {
-    if (err) {
-      return callback(err);
-    }
+  if (!result) {
+    throw new Error('generic_fail');
+  }
 
-    if (!result) {
-      return callback(null, null);
-    }
-
-    return callback(null, status.getStatus('success'));
-  });
+  let response = status.getStatus('success');
+  return response;
 };
 
 module.exports = {
   init: init,
-  healthchecks: healthchecks
+  healthchecks: wrapperService.wrap(healthchecks)
 };
