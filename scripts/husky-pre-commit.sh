@@ -15,3 +15,4 @@ then
 fi
 ./node_modules/eslint/bin/eslint.js . --fix
 ./scripts/beautify.sh
+./node_modules/eslint/bin/eslint.js .
