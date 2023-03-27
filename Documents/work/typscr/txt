@@ -1,0 +1,55 @@
+{
+  "name": "node-api-boilerplate",
+  "version": "1.0.0",
+  "description": "Boilerplate code for NodeJS APIs",
+  "main": "server.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "dependencies": {
+    "@forestadmin/agent": "^1.8.2",
+    "@forestadmin/datasource-sql": "^1.2.4",
+    "async": "^3.2.4",
+    "body-parser": "^1.19.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^2.3.0",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "node-fetch": "^2.6.7",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.13.0",
+    "husky": "^7.0.0",
+    "jest": "^27.0.6",
+    "pkg": "^5.3.0",
+    "prettier": "^2.6.2"
+  },
+  "scripts": {
+    "test": "./scripts/tests.sh",
+    "test-server": "NODE_ENV=test;node server.js",
+    "start": "node server.js",
+    "git-check": "./scripts/npm/git-check.sh",
+    "beautify": "./scripts/beautify.sh",
+    "dist": "./scripts/dist.sh",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sahilnarain/node-api-boilerplate"
+  },
+  "keywords": [
+    "api",
+    "node",
+    "boilerplate"
+  ],
+  "author": "Sahil Narain",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sahilnarain/node-api-boilerplate"
+  },
+  "homepage": "https://github.com/sahilnarain/node-api-boilerplate"
+}
