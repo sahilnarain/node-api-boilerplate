@@ -8,13 +8,12 @@
     "test": "tests"
   },
   "dependencies": {
-    "async": "^3.2.2",
     "body-parser": "^1.20.1",
     "express": "^4.17.3",
+    "knex": "^2.1.0",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
-    "request": "^2.88.2",
-    "squel": "^5.13.0"
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {
     "eslint": "^8.13.0",

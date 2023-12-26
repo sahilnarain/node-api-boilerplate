@@ -39,16 +39,18 @@ app.use(
   })
 );
 
-// Make DB connections
-/*
-config.mysqlConnection.connect((err) => {
-  if (err) {
-    console.log('MySQL connection error: ', err);
-  } else {
+// DB connectivity check
+const dbSelfCheck = async () => {
+  let dbSelfCheckQuery = config.knex.select(config.knex.raw('now()'));
+
+  try {
+    let result = await dbSelfCheckQuery;
     console.log('Connected to MySQL DB...');
+  } catch (e) {
+    console.log('MySQL connection error', e);
   }
-});
-*/
+};
+// dbSelfCheck();
 
 // Set allowed headers
 app.use((req, res, next) => {
