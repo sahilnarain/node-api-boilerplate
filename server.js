@@ -50,7 +50,7 @@ const dbSelfCheck = async () => {
     console.log('MySQL connection error', e);
   }
 };
-dbSelfCheck();
+// dbSelfCheck();
 
 // Set allowed headers
 app.use((req, res, next) => {
