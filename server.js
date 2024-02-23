@@ -4,6 +4,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
+const compression = require('compression');
 
 !fs.existsSync(`${__dirname}/node_modules/app`) ? fs.symlinkSync(`${__dirname}/app`, `${__dirname}/node_modules/app`) : null;
 const healthchecks = require('app/services/healthchecks');
@@ -26,6 +27,8 @@ const authsMiddleware = require('app/middlewares/auths');
 const healthchecksRouter = require('app/routes/healthchecks');
 
 // Use JSON body parser
+app.use(compression());
+
 app.use(
   bodyParser.json({
     limit: 1024102420
