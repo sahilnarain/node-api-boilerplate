@@ -1,6 +1,6 @@
 'use strict';
 
-const mysql = require('mysql');
+const Knex = require('knex');
 const os = require('os');
 
 const mysqlConnectionString = {
@@ -8,17 +8,27 @@ const mysqlConnectionString = {
   user: '',
   password: '',
   database: '',
-  port: 3306,
-  multipleStatements: true
+  port: 3306
 };
 
-const mysqlConnection = mysql.createConnection(mysqlConnectionString);
+const KNEX_CONFIG = {
+  client: 'mysql',
+  connection: mysqlConnectionString
+};
+
+const knex = Knex(KNEX_CONFIG);
 
 const MORGAN_LOG_PATH = `${os.homedir()}/.logs`;
 
+const HEALTHCHECKS = {
+  DEPLOY_BASE_URL: 'http://localhost:3000',
+  URL: 'https://hc-ping.com/uuid'
+};
+
 const config = {
-  mysqlConnection: mysqlConnection,
-  MORGAN_LOG_PATH: MORGAN_LOG_PATH
+  knex: knex,
+  MORGAN_LOG_PATH: MORGAN_LOG_PATH,
+  HEALTHCHECKS: HEALTHCHECKS
 };
 
 module.exports = config;

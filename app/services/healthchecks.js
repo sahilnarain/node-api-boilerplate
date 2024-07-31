@@ -1,7 +1,5 @@
 'use strict';
 
-const fetch = require('node-fetch');
-
 const config = require('app/configs/config');
 const status = require('app/configs/status');
 
@@ -10,7 +8,7 @@ const wrapperService = require('app/services/wrapper');
 const healthchecksModel = require('app/models/healthchecks');
 
 const init = async () => {
-  if (process.env.NODE_ENV === 'test') {
+  if (`${process.env.NODE_ENV}` === 'test') {
     return;
   }
 

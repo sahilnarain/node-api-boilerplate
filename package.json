@@ -17,8 +17,8 @@
     "mysql": "^2.18.1"
   },
   "devDependencies": {
+    "esbuild": "^0.23.0",
     "husky": "^7.0.4",
-    "pkg": "^5.8.1",
     "prettier": "^2.8.8"
   },
   "scripts": {
@@ -34,7 +34,11 @@
     "type": "git",
     "url": "git+https://github.com/sahilnarain/node-api-boilerplate"
   },
-  "keywords": ["api", "node", "boilerplate"],
+  "keywords": [
+    "api",
+    "node",
+    "boilerplate"
+  ],
   "author": "Sahil Narain",
   "license": "MIT",
   "bugs": {
