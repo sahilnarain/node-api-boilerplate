@@ -10,18 +10,16 @@
   "dependencies": {
     "body-parser": "^1.20.1",
     "compression": "^1.7.4",
-    "express": "^4.17.3",
-    "knex": "^2.1.0",
+    "eslint": "^8.13.0",
+    "express": "^4.19.2",
+    "knex": "^2.5.1",
     "morgan": "^1.10.0",
-    "mysql": "^2.18.1",
-    "node-fetch": "^2.6.7"
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
-    "eslint": "^8.13.0",
-    "husky": "^7.0.0",
-    "jest": "^27.0.6",
-    "pkg": "^5.3.0",
-    "prettier": "^2.6.2"
+    "husky": "^7.0.4",
+    "pkg": "^5.8.1",
+    "prettier": "^2.8.8"
   },
   "scripts": {
     "test": "./scripts/tests.sh",
@@ -36,11 +34,7 @@
     "type": "git",
     "url": "git+https://github.com/sahilnarain/node-api-boilerplate"
   },
-  "keywords": [
-    "api",
-    "node",
-    "boilerplate"
-  ],
+  "keywords": ["api", "node", "boilerplate"],
   "author": "Sahil Narain",
   "license": "MIT",
   "bugs": {

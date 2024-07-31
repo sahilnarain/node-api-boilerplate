@@ -34,9 +34,23 @@ const sortByDesc = (key) => {
   return (array1, array2) => (array1[key] < array2[key] ? 1 : array2[key] < array1[key] ? -1 : 0);
 };
 
+const prepareFetchOptions = (options) => {
+  if (options.method.toUpperCase() === 'GET') {
+    delete options.body;
+    options.qs && Object.keys(options.qs).length ? (options.url += '?' + new URLSearchParams(options.qs)) : null;
+  }
+
+  options.json ? delete options.json : null;
+  options.headers ? (options.headers['Content-Type'] = 'application/json') : null;
+  options.body ? (options.body = JSON.stringify(options.body)) : null;
+
+  return options;
+};
+
 module.exports = {
   sanitizeSqlResult: sanitizeSqlResult,
   addDays: addDays,
   createHierarchy: createHierarchy,
-  sortByDesc: sortByDesc
+  sortByDesc: sortByDesc,
+  prepareFetchOptions: prepareFetchOptions
 };
