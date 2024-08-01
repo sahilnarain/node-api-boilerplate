@@ -1,0 +1,18 @@
+DROP DATABASE IF EXISTS boilerplate;
+
+CREATE DATABASE IF NOT EXISTS boilerplate CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE boilerplate;
+
+DROP TABLE IF EXISTS
+ sample;
+
+CREATE TABLE sample
+(
+  id INT NOT NULL AUTO_INCREMENT,
+  active BOOL NOT NULL DEFAULT TRUE,
+  created_at DATETIME NOT NULL DEFAULT NOW(),
+  updated_at DATETIME NULL,
+  deleted_at DATETIME NULL,
+  PRIMARY KEY(id),
+  UNIQUE INDEX sample_id(id) USING HASH
+);

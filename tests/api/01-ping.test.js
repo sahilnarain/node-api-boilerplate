@@ -25,28 +25,38 @@ const data = {
   }
 };
 
-test.beforeEach(async () => {
-  assert.strictEqual(process.env.NODE_ENV, 'test');
-});
+let seq = 0;
 
-test.before(async () => {
-  return await setup.setup();
-});
+test.describe('PING', async () => {
+  test.before(async () => {
+    await setup.setup();
 
-test.after(async () => {
-  return await setup.teardown();
-});
+    return;
+  });
 
-test.describe('Ping');
+  test.beforeEach(async () => {
+    assert.strictEqual(process.env.NODE_ENV, 'test');
 
-test('1. Ping should be up and running.', async () => {
-  let options = JSON.parse(JSON.stringify(data.pingApi.options));
-  options = utilsService.prepareFetchOptions(options);
+    return;
+  });
 
-  let result = await fetch(options.url, options);
-  result = await result.text();
+  test.after(async () => {
+    await setup.teardown();
 
-  assert.strictEqual(result, 'pong');
+    return;
+  });
 
+  test(`${++seq}. Ping should be up and running.`, async () => {
+    let options = JSON.parse(JSON.stringify(data.pingApi.options));
+    options = utilsService.prepareFetchOptions(options);
+
+    let result = await (await fetch(options.url, options)).text();
+
+    assert.strictEqual(result, 'pong');
+
+    return;
+  });
+
+  console.log();
   return;
 });

@@ -25,34 +25,41 @@ const data = {
   }
 };
 
-test.before(async () => {
-  return await setup.setup();
+let seq = 0;
+
+test.describe('HEALTHCHECKS', async () => {
+  test.before(async () => {
+    await setup.setup();
+
+    return;
+  });
+
+  test.after(async () => {
+    await setup.teardown();
+
+    return;
+  });
+
+  test.beforeEach(async () => {
+    assert.strictEqual(process.env.NODE_ENV, 'test');
+
+    return;
+  });
+
+  test(`${++seq}. Healthcheck should be up and working`, async () => {
+    let options = JSON.parse(JSON.stringify(data.healthchecksApi.options));
+    options = utilsService.prepareFetchOptions(options);
+
+    let result = await (await fetch(options.url, options)).json();
+
+    assert.strictEqual(result.hasOwnProperty('code'), true);
+    assert.strictEqual(result.hasOwnProperty('error'), true);
+    assert.strictEqual(result.error, false);
+    assert.strictEqual(result.hasOwnProperty('message'), true);
+
+    return;
+  });
+
+  console.log();
+  return;
 });
-
-test.after(async () => {
-  return await setup.teardown();
-});
-
-test.beforeEach(async () => {
-  assert.strictEqual(process.env.NODE_ENV, 'test');
-
-  return null;
-});
-
-test.describe('Healthchecks');
-
-test('1. Healthcheck should be up and working', async () => {
-  let options = JSON.parse(JSON.stringify(data.healthchecksApi.options));
-  options = utilsService.prepareFetchOptions(options);
-
-  let result = await (await fetch(options.url, options)).json();
-
-  assert.strictEqual(result.hasOwnProperty('code'), true);
-  assert.strictEqual(result.hasOwnProperty('error'), true);
-  assert.strictEqual(result.error, false);
-  assert.strictEqual(result.hasOwnProperty('message'), true);
-
-  return null;
-});
-
-return null;
