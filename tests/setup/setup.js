@@ -15,14 +15,14 @@ const setup = async () => {
   dbSetupSql = dbSetupSql.replace('DATABASE boilerplate', 'DATABASE boilerplate_test');
   dbSetupSql = dbSetupSql.replace('USE boilerplate', 'USE boilerplate_test');
 
-  let result = await dbSetupSql;
+  let result = await config.knex.raw(dbSetupSql);
 };
 
 const teardown = async () => {
   let teardownSql = fs.readFileSync(dbTeardown).toString();
   teardownSql = teardownSql.replace(/boilerplate/g, 'boilerplate_test');
 
-  let result = await teardownSql;
+  let result = await config.knex.raw(teardownSql);
 };
 
 module.exports = {
