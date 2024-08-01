@@ -52,10 +52,11 @@ test.describe('HEALTHCHECKS', async () => {
 
     let result = await (await fetch(options.url, options)).json();
 
-    assert.strictEqual(result.hasOwnProperty('code'), true);
-    assert.strictEqual(result.hasOwnProperty('error'), true);
+    assert.ok(result.hasOwnProperty('code'), true);
+    assert.strictEqual(result.code, 'success');
+    assert.ok(result.hasOwnProperty('error'), true);
     assert.strictEqual(result.error, false);
-    assert.strictEqual(result.hasOwnProperty('message'), true);
+    assert.ok(result.hasOwnProperty('message'), true);
 
     return;
   });
