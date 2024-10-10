@@ -1,6 +1,5 @@
 'use strict';
 
-const http = require('http');
 const https = require('https');
 
 const config = require('app/configs/config');
@@ -47,13 +46,8 @@ const prepareFetchOptions = (options) => {
   options.headers ? (options.headers['Content-Type'] = 'application/json') : null;
   options.body ? (options.body = JSON.stringify(options.body)) : null;
 
-  if (options.url) {
-    if (options.url.test('/^http:/')) {
-      options.agent = new http.Agent({family: 6});
-    } else if (options.url.test(/^https:/)) {
-      options.agent = new https.Agent({family: 6});
-    }
-  }
+  // Uncomment the below line to force IPv6
+  // options.agent = new https.Agent({family: 6});
 
   return options;
 };
