@@ -13,8 +13,8 @@
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
-    "no-unused-vars": "warn",
+    "no-unused-vars": "error",
     "no-prototype-builtins": "off",
-    "no-useless-escape": "warn"
+    "no-useless-escape": "error"
   }
 }
