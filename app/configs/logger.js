@@ -15,6 +15,7 @@ let _logFile = `${config.MORGAN_LOG_PATH}/morgan.log`;
 fs.existsSync(_logFile) ? null : fs.writeFileSync(_logFile, new Date().toISOString());
 
 // Configure logging
+// eslint-disable-next-line no-unused-vars
 logger.token('req-body', (req, res) => {
   return JSON.stringify({
     params: req.query,
@@ -22,14 +23,17 @@ logger.token('req-body', (req, res) => {
   });
 });
 
+// eslint-disable-next-line no-unused-vars
 logger.token('req-headers', (req, res) => {
   return JSON.stringify(req.headers);
 });
 
+// eslint-disable-next-line no-unused-vars
 logger.token('tracking', (req, res) => {
   return req.headers['x-device-id'] ? req.headers['x-device-id'] : 'DEFAULT';
 });
 
+// eslint-disable-next-line no-unused-vars
 logger.token('uri', (req, res) => {
   return req.originalUrl.split('?')[0];
 });

@@ -13,9 +13,6 @@ const addDays = (date, numberOfDays) => {
 };
 
 const createHierarchy = (input) => {
-  let length = input.length;
-  let result = [];
-
   for (let i = input.length - 1; i >= 0; i--) {
     if (input[i].parent_id) {
       let _index = input.indexOf(input.filter((inp) => inp.id === input[i].parent_id)[0]);
@@ -46,8 +43,7 @@ const prepareFetchOptions = (options) => {
   options.headers ? (options.headers['Content-Type'] = 'application/json') : null;
   options.body ? (options.body = JSON.stringify(options.body)) : null;
 
-  // Uncomment the below line to force IPv6
-  // options.agent = new https.Agent({family: 6});
+  config.IPV6 ? (options.agent = new https.Agent({family: 6})) : null;
 
   return options;
 };

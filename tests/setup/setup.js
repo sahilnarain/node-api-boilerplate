@@ -15,7 +15,7 @@ const setup = async () => {
   dbSetupSql = dbSetupSql.replace('CREATE DATABASE IF NOT EXISTS boilerplate', 'CREATE DATABASE IF NOT EXISTS boilerplate_test');
   dbSetupSql = dbSetupSql.replace('USE boilerplate', 'USE boilerplate_test');
 
-  // let result = await config.knex.raw(dbSetupSql);
+  await config.knex.raw(dbSetupSql);
 
   return;
 };
@@ -25,7 +25,7 @@ const teardown = async () => {
 
   teardownSql = teardownSql.replace(/boilerplate/g, 'boilerplate_test');
 
-  // let result = await config.knex.raw(teardownSql);
+  await config.knex.raw(teardownSql);
 
   return;
 };

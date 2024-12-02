@@ -17,6 +17,7 @@
     "mysql": "^2.18.1"
   },
   "devDependencies": {
+    "@stoplight/spectral-cli": "^6.14.1",
     "esbuild": "^0.23.0",
     "husky": "^7.0.4",
     "prettier": "^2.8.8"
@@ -28,17 +29,14 @@
     "git-check": "./scripts/npm/git-check.sh",
     "beautify": "./scripts/beautify.sh",
     "dist": "./scripts/dist.sh",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint-docs": "./node_modules/@stoplight/spectral-cli/dist/index.js lint docs/api/spec.yaml --ruleset spectral.yaml"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sahilnarain/node-api-boilerplate"
   },
-  "keywords": [
-    "api",
-    "node",
-    "boilerplate"
-  ],
+  "keywords": ["api", "node", "boilerplate"],
   "author": "Sahil Narain",
   "license": "MIT",
   "bugs": {

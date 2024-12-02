@@ -1,0 +1,444 @@
+openapi: 3.0.1
+
+info:
+  title: Project API
+  version: 1.0.0
+  description: API specification for Project
+  contact:
+    name: John Doe
+    url: https://domain.com
+    email: support@domain.com
+
+servers:
+  - url: https://domain.com/dev
+    description: Development Environment
+  - url: https://domain.com/stage
+    description: Staging Environment
+  - url: https://domain.com/v1
+    description: Production Environment
+
+tags:
+  - name: ping
+    description: Ping API
+
+  - name: healthchecks
+    description: Healthchecks API
+
+  - name: foo
+    description: Foo API
+
+  - name: bar
+    description: Bar API
+
+paths:
+  /ping:
+    get:
+      summary: Checks the reachability of the API
+      description: >-
+        The reachability of the host can be checked through the Ping API. The
+        API responds with a `pong` to communicate availability to the requesting
+        client.
+      operationId: ping
+      tags:
+        - ping
+      responses:
+        '200':
+          description: Response
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/APIResponseSuccessString'
+              examples:
+                Success:
+                  $ref: '#/components/examples/SuccessPing'
+
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponseError'
+              examples:
+                Failure:
+                  $ref: '#/components/examples/GenericFail'
+
+  /healthchecks:
+    get:
+      summary: Checks the status of the API
+      description: >-
+        This forces the backend to run a full connectivity check and reports the status.
+      operationId: healthchecks
+      tags:
+        - healthchecks
+      responses:
+        '200':
+          description: Successful healthcheck
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/APIResponseSuccess'
+                  - $ref: '#/components/schemas/APIResponseError'
+
+              examples:
+                Success:
+                  $ref: '#/components/examples/Success'
+
+                GenericFail:
+                  $ref: '#/components/examples/GenericFail'
+
+  /foo:
+    post:
+      summary: Create foo.
+      description: >-
+        Creates a foo object.
+      operationId: createFoo
+      tags:
+        - foo
+      parameters:
+        # Headers
+        - in: header
+          name: x-auth
+          description: Session token received from the authentication API.
+          required: true
+          schema:
+            $ref: '#/components/headers/Auth'
+        - in: header
+          name: x-identifier
+          description: Unique device identifier.
+          required: true
+          schema:
+            $ref: '#/components/headers/Identifier'
+        - in: header
+          name: x-origin
+          description: Origin of the app making the request.
+          required: true
+          schema:
+            $ref: '#/components/headers/Origin'
+        - in: header
+          name: x-platform
+          description: Device platform. 1 for Web, 2 for iOS and 3 for Android.
+          required: true
+          schema:
+            $ref: '#/components/headers/Platform'
+        - in: header
+          name: x-version
+          description: App release version.
+          required: true
+          schema:
+            $ref: '#/components/headers/Version'
+        - in: header
+          name: Content-Type
+          description: Content Type for the request.
+          required: false
+          schema:
+            $ref: '#/components/headers/ContentType'
+        - in: header
+          name: User-Agent
+          description: User Agent used for calling the API.
+          required: false
+          schema:
+            $ref: '#/components/headers/UserAgent'
+      # Body
+      requestBody:
+        description: Request body for creating a authentication request
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                foo:
+                  type: string
+                  description: Foo
+                  example: 'bar'
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/APIResponseSuccess'
+                  - $ref: '#/components/schemas/APIResponseError'
+
+              examples:
+                Success:
+                  $ref: '#/components/examples/SuccessFoo'
+
+                GenericFail:
+                  $ref: '#/components/examples/GenericFail'
+
+                HeadersMissing:
+                  $ref: '#/components/examples/HeadersMissing'
+
+                InputMissing:
+                  $ref: '#/components/examples/InputMissing'
+
+                AuthnFail:
+                  $ref: '#/components/examples/AuthnFail'
+
+                AuthrFail:
+                  $ref: '#/components/examples/AuthrFail'
+
+  /bar/{bar_id}:
+    post:
+      summary: Create bar.
+      description: >-
+        Creates a bar object.
+      operationId: updateBar
+      tags:
+        - bar
+      parameters:
+        # Headers
+        - in: header
+          name: x-auth
+          description: Session token received from the authentication API.
+          required: true
+          schema:
+            $ref: '#/components/headers/Auth'
+        - in: header
+          name: x-identifier
+          description: Unique device identifier.
+          required: true
+          schema:
+            $ref: '#/components/headers/Identifier'
+        - in: header
+          name: x-origin
+          description: Origin of the app making the request.
+          required: true
+          schema:
+            $ref: '#/components/headers/Origin'
+        - in: header
+          name: x-platform
+          description: Device platform. 1 for Web, 2 for iOS and 3 for Android.
+          required: true
+          schema:
+            $ref: '#/components/headers/Platform'
+        - in: header
+          name: x-version
+          description: App release version.
+          required: true
+          schema:
+            $ref: '#/components/headers/Version'
+        - in: header
+          name: Content-Type
+          description: Content Type for the request.
+          required: false
+          schema:
+            $ref: '#/components/headers/ContentType'
+        - in: header
+          name: User-Agent
+          description: User Agent used for calling the API.
+          required: false
+          schema:
+            $ref: '#/components/headers/UserAgent'
+        # Path
+        - in: path
+          name: bar_id
+          description: ID of Bar
+          schema:
+            type: string
+          required: true
+      # Body
+      requestBody:
+        description: Request body for creating a authentication request
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bar:
+                  type: string
+                  description: Bar
+                  example: 'foo'
+
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/APIResponseSuccess'
+                  - $ref: '#/components/schemas/APIResponseError'
+
+              examples:
+                Success:
+                  $ref: '#/components/examples/SuccessBar'
+
+                GenericFail:
+                  $ref: '#/components/examples/GenericFail'
+
+                HeadersMissing:
+                  $ref: '#/components/examples/HeadersMissing'
+
+                InputMissing:
+                  $ref: '#/components/examples/InputMissing'
+
+                AuthnFail:
+                  $ref: '#/components/examples/AuthnFail'
+
+                AuthrFail:
+                  $ref: '#/components/examples/AuthrFail'
+components:
+  schemas:
+    APIResponseSuccessString:
+      type: string
+
+    APIResponseSuccess:
+      type: object
+      required:
+        - code
+        - error
+        - message
+      properties:
+        code:
+          type: string
+        error:
+          type: boolean
+          enum: [false]
+        message:
+          type: string
+        data:
+          type: object
+          additionalProperties: true
+
+    APIResponseError:
+      type: object
+      required:
+        - code
+        - error
+        - message
+      properties:
+        code:
+          type: string
+          enum:
+            [
+              generic_fail,
+              input_missing,
+              headers_missing,
+              authn_fail,
+              authr_fail
+            ]
+        error:
+          type: boolean
+          enum: [true]
+        message:
+          type: string
+
+  headers:
+    Auth:
+      schema:
+        type: string
+      description: Session token received from the authentication API.
+      required: true
+
+    Identifier:
+      schema:
+        type: string
+      description: Unique device identifier.
+      required: true
+
+    Origin:
+      schema:
+        type: number
+      description: Origin of the app making the request.
+      required: true
+
+    Platform:
+      schema:
+        type: number
+      description: Device platform. 1 for Web, 2 for iOS and 3 for Android.
+      required: true
+
+    Version:
+      schema:
+        type: number
+      description: App release version.
+      required: true
+
+    ContentType:
+      schema:
+        type: string
+      description: Content Type for the request.
+      required: false
+
+    UserAgent:
+      schema:
+        type: string
+      description: User Agent used for calling the API.
+      required: false
+
+  examples:
+    SuccessPing:
+      summary: Successful
+      value: pong
+
+    Success:
+      summary: Successful
+      value:
+        code: success
+        error: false
+        message: Successful
+
+    GenericFail:
+      summary: Error - Generic Failure
+      description: Thrown generically when an unexpected error occurs in the system.
+      value:
+        code: generic_fail
+        error: true
+        message: Something went wrong.
+
+    InputMissing:
+      summary: Error - Input Missing
+      description: Thrown when mandatory inputs required for an API are missing.
+      value:
+        code: input_missing
+        error: true
+        message: Mandatory inputs missing.
+
+    HeadersMissing:
+      summary: Error - Headers Missing
+      description: Thrown when mandatory headers required for an API are missing.
+      value:
+        code: headers_missing
+        error: true
+        message: Mandatory headers missing.
+
+    AuthnFail:
+      summary: Error - Authentication failure
+      description: Thrown when authentication fails.
+      value:
+        code: authn_fail
+        error: true
+        message: Authentication failed.
+
+    AuthrFail:
+      summary: Error - Authorisation failure
+      description: Thrown when authorisation fails. This typically happens while attemping an operation which is not allowed for the requestor.
+      value:
+        code: authr_fail
+        error: true
+        message: Authorisation failed.
+
+    SuccessFoo:
+      summary: Success for Foo
+      description: Foo object
+      value:
+        code: sucess
+        error: false
+        message: Successful
+        data:
+          foo:
+            foo: 'bar'
+
+    SuccessBar:
+      summary: Success for Bar
+      description: Bar object
+      value:
+        code: sucess
+        error: false
+        message: Successful
+        data:
+          bar:
+            bar: 'foo'

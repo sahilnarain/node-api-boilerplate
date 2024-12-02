@@ -36,9 +36,8 @@ const init = async () => {
   }, 30000);
 };
 
-const healthchecks = async (params) => {
-  let healthchecksParams = {};
-  let result = await healthchecksModel.check(healthchecksParams);
+const healthchecks = async () => {
+  let result = await healthchecksModel.check();
 
   if (!result) {
     throw new Error('generic_fail');

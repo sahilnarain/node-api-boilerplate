@@ -47,15 +47,16 @@ const dbSelfCheck = async () => {
   let dbSelfCheckQuery = config.knex.select(config.knex.raw('now()'));
 
   try {
-    let result = await dbSelfCheckQuery;
+    await dbSelfCheckQuery;
     console.log('Connected to MySQL DB...');
   } catch (e) {
     console.log('MySQL connection error', e);
   }
 };
-// dbSelfCheck();
+dbSelfCheck();
 
 // Set allowed headers
+// eslint-disable-next-line no-unused-vars
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Authorization,User-Agent,X-Auth,X-Version');
@@ -88,12 +89,14 @@ app.use(authsMiddleware);
 // Routes
 
 // Catch 404s
+// eslint-disable-next-line no-unused-vars
 app.use((req, res, next) => {
   res.statusCode = 404;
   res.json(status.getStatus('url_missing'));
 });
 
 // Global error handler
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   if (err) {
     console.log(new Date().toISOString(), err);
