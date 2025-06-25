@@ -25,6 +25,7 @@ const authsMiddleware = require('app/middlewares/auths');
 
 // Include routers
 const healthchecksRouter = require('app/routes/healthchecks');
+const placeholderRouter = require('app/routes/placeholder');
 
 // Use JSON body parser
 app.use(compression());
@@ -87,6 +88,7 @@ if (isDeveloping) {
 app.use(authsMiddleware);
 
 // Routes
+app.use('/placeholder', placeholderRouter);
 
 // Catch 404s
 // eslint-disable-next-line no-unused-vars
