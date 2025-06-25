@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@stoplight/spectral-cli": "^6.14.1",
-    "esbuild": "^0.23.0",
+    "esbuild": "^0.25.5",
     "husky": "^7.0.4",
     "prettier": "^2.8.8"
   },
@@ -36,7 +36,11 @@
     "type": "git",
     "url": "git+https://github.com/sahilnarain/node-api-boilerplate"
   },
-  "keywords": ["api", "node", "boilerplate"],
+  "keywords": [
+    "api",
+    "node",
+    "boilerplate"
+  ],
   "author": "Sahil Narain",
   "license": "MIT",
   "bugs": {
