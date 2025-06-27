@@ -20,6 +20,14 @@ const getStatus = (code) => {
       };
       break;
 
+    case 'input_missing':
+      status = {
+        code: code,
+        error: true,
+        message: 'Mandatory inputs missing'
+      };
+      break;
+
     case 'generic_fail':
     default:
       status = {
