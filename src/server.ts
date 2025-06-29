@@ -1,31 +1,32 @@
 'use strict';
 
 // Include core libraries
-const express = require('express');
-const bodyParser = require('body-parser');
-const fs = require('fs');
-const compression = require('compression');
+import express from 'express';
+import bodyParser from 'body-parser';
+import fs from 'fs';
+import compression from 'compression';
 
 !fs.existsSync(`${__dirname}/node_modules/app`) ? fs.symlinkSync(`${__dirname}/app`, `${__dirname}/node_modules/app`) : null;
-const healthchecks = require('app/services/healthchecks');
+
+import healthchecksService from 'app/services/healthchecks';
 
 const app = express();
 
 // Include config files
-const config = require('app/configs/config');
-const status = require('app/configs/status');
-const loggerConfig = require('app/configs/logger');
+import config from 'app/configs/config';
+import status from 'app/configs/status';
+import loggerConfig from 'app/configs/logger';
 
 const isDeveloping = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
 
 app.disable('x-powered-by');
 
 // Include middleware
-const authsMiddleware = require('app/middlewares/auths');
+import authsMiddleware from 'app/middlewares/auths';
 
 // Include routers
-const healthchecksRouter = require('app/routes/healthchecks');
-const placeholderRouter = require('app/routes/placeholder');
+import healthchecksRouter from 'app/routes/healthchecks';
+import placeholderRouter from 'app/routes/placeholder';
 
 // Use JSON body parser
 app.use(compression());
@@ -70,7 +71,7 @@ app.use((req, res, next) => {
 });
 
 // Healthcheck routes
-healthchecks.init();
+healthchecksService.init();
 app.use('/healthchecks', healthchecksRouter);
 app.get('/ping', (req, res) => {
   res.send('pong');

@@ -1,13 +1,13 @@
 'use strict';
 
-const config = require('app/configs/config');
-const status = require('app/configs/status');
+import {HealthchecksApiResponse} from 'types/index';
 
-const wrapperService = require('app/services/wrapper');
+import config from 'app/configs/config';
+import status from 'app/configs/status';
 
-const healthchecksModel = require('app/models/healthchecks');
+import healthchecksModel from 'app/models/healthchecks';
 
-const init = async () => {
+const init = async (): Promise<void> => {
   if (`${process.env.NODE_ENV}` === 'test') {
     return;
   }
@@ -36,7 +36,7 @@ const init = async () => {
   }, 30000);
 };
 
-const healthchecks = async () => {
+const healthchecks = async (): Promise<HealthchecksApiResponse> => {
   let result = await healthchecksModel.check();
 
   if (!result) {
@@ -44,10 +44,11 @@ const healthchecks = async () => {
   }
 
   let response = status.getStatus('success');
+
   return response;
 };
 
-module.exports = {
-  init: wrapperService.wrap(init),
-  healthchecks: wrapperService.wrap(healthchecks)
+export default {
+  init: init,
+  healthchecks: healthchecks
 };

@@ -1,9 +1,9 @@
 'use strict';
 
-const fs = require('fs');
-const logger = require('morgan');
+import fs from 'fs';
+import logger from 'morgan';
 
-const config = require('app/configs/config');
+import config from 'app/configs/config';
 
 // Create log file if it doesn't exist
 fs.existsSync(`${config.MORGAN_LOG_PATH}`)
@@ -49,7 +49,7 @@ const _customLogFormat = logger(customLogFormat, {
 
 const _devLogStream = logger('dev');
 
-module.exports = {
+export default {
   customLogFormat: _customLogFormat,
   devLogStream: _devLogStream
 };

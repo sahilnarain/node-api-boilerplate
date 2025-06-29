@@ -1,7 +1,9 @@
 'use strict';
 
-const Knex = require('knex');
-const os = require('os');
+import {EnvironmentConfig} from 'types/index';
+
+import Knex from 'knex';
+import os from 'os';
 
 const mysqlConnectionString = {
   host: '',
@@ -25,10 +27,10 @@ const HEALTHCHECKS = {
   URL: 'https://hc-ping.com/uuid'
 };
 
-const config = {
+const config: EnvironmentConfig = {
   knex: knex,
   MORGAN_LOG_PATH: MORGAN_LOG_PATH,
   HEALTHCHECKS: HEALTHCHECKS
 };
 
-module.exports = config;
+export default config;
