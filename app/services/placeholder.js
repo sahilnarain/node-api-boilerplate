@@ -14,7 +14,12 @@ const createPlaceholder = async (params) => {
   let placeholderParams = {};
   placeholderParams.param1 = params.param1;
 
-  let result = await placeholderModel.createPlaceholder(placeholderParams);
+  let placeholderId = await placeholderModel.createPlaceholder(placeholderParams);
+
+  placeholderParams = {};
+  placeholderParams.placeholderId = placeholderId;
+
+  let result = await placeholderModel.getPlaceholder(placeholderParams);
 
   let response = status.getStatus('success');
   response.data = {};
