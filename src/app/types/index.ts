@@ -54,17 +54,31 @@ export interface CreatePlaceholderParams {
   param1: string;
 }
 
-export interface CreatePlaceholderApiResponse extends ApiResponse {
-  data: Placeholder;
+export interface CreatePlaceholderServiceResponse extends ApiResponse {
+  data: {
+    placeholder: Placeholder;
+  };
+}
+
+export interface CreatePlaceholderApiResponse extends CreatePlaceholderServiceResponse, Response {
+  data: {
+    placeholder: Placeholder;
+  };
 }
 
 export interface GetPlaceholdersApiRequest extends Request {}
 
-export interface GetPlaceholdersParams {}
-
-export interface GetPlaceholdersApiResponse extends ApiResponse {
-  data: Array<Placeholder>;
+export interface GetPlaceholdersParams {
+  placeholderId?: number;
 }
+
+export interface GetPlaceholdersServiceResponse extends ApiResponse {
+  data: {
+    placeholders: Placeholder[];
+  };
+}
+
+export interface GetPlaceholdersApiResponse extends GetPlaceholdersServiceResponse, Response {}
 
 export interface GetPlaceholderApiRequest extends Request {
   params: {
@@ -76,9 +90,13 @@ export interface GetPlaceholderParams {
   placeholderId: number;
 }
 
-export interface GetPlaceholderApiResponse extends ApiResponse {
-  data: Placeholder;
+export interface GetPlaceholderServiceResponse extends ApiResponse {
+  data: {
+    placeholder: Placeholder;
+  };
 }
+
+export interface GetPlaceholderApiResponse extends GetPlaceholderServiceResponse, Response {}
 
 export interface UpdatePlaceholderApiRequest extends Request {
   params: {
@@ -94,6 +112,10 @@ export interface UpdatePlaceholderParams {
   param1?: string;
 }
 
-export interface UpdatePlaceholderApiResponse extends ApiResponse {
-  data: Placeholder;
+export interface UpdatePlaceholderServiceResponse extends ApiResponse {
+  data: {
+    placeholder: Placeholder;
+  };
 }
+
+export interface UpdatePlaceholderApiResponse extends UpdatePlaceholderServiceResponse, Response {}

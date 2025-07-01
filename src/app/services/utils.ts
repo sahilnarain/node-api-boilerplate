@@ -1,8 +1,8 @@
 'use strict';
 
-const https = require('https');
+import https from 'https';
 
-const config = require('app/configs/config');
+import config from 'app/configs/config';
 
 const sanitizeSqlResult = (result) => {
   return JSON.parse(JSON.stringify(result));
@@ -48,7 +48,7 @@ const prepareFetchOptions = (options) => {
   return options;
 };
 
-module.exports = {
+export default {
   sanitizeSqlResult: sanitizeSqlResult,
   addDays: addDays,
   createHierarchy: createHierarchy,
