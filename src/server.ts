@@ -7,7 +7,6 @@ import bodyParser from 'body-parser';
 import fs from 'fs';
 import compression from 'compression';
 
-// !fs.existsSync(`${__dirname}/node_modules/app`) ? fs.symlinkSync(`${__dirname}/app`, `${__dirname}/node_modules/app`) : null;
 import healthchecks from 'app/services/healthchecks';
 
 const app = express();
@@ -55,7 +54,7 @@ const dbSelfCheck = async () => {
     console.log('MySQL connection error', e);
   }
 };
-// dbSelfCheck();
+dbSelfCheck();
 
 // Set allowed headers
 // eslint-disable-next-line no-unused-vars

@@ -23,6 +23,7 @@
     "@types/body-parser": "^1.19.6",
     "@types/compression": "^1.8.1",
     "@types/express": "^5.0.3",
+    "@types/morgan": "^1.9.10",
     "esbuild": "^0.25.5",
     "husky": "^7.0.4",
     "prettier": "^2.8.8",

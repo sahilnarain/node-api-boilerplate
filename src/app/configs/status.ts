@@ -1,7 +1,7 @@
-'use strict';
+import type { Status } from 'app/configs/types';
 
-const getStatus = (code) => {
-  let status = null;
+export const getStatus = (code: string): Status => {
+  let status = null as Status | null;
 
   switch (code) {
     case 'success':
@@ -43,4 +43,8 @@ const getStatus = (code) => {
 
 module.exports = {
   getStatus: getStatus
-};
+}
+
+export default {
+  getStatus
+}

@@ -1,10 +1,12 @@
 'use strict';
+import type { CommonConfig } from 'app/configs/types';
 
 const IPV6 = true;
 
 const config = {
   SERVER_IP: IPV6 ? '::' : '0.0.0.0',
   SERVER_PORT: process.env.PORT || 3000
-};
+} as CommonConfig;
 
 module.exports = config;
+export default config;

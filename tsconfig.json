@@ -9,6 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
     "checkJs": false,
+    "declaration": true,
     "rootDir": "src",
     "moduleResolution": "node",
     "resolveJsonModule": true,

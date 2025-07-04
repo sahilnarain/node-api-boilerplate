@@ -1,3 +1,4 @@
+rm -rf dist
 npm run build
 
 cp -r node_modules dist/node_modules
