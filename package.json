@@ -13,25 +13,36 @@
     "eslint": "^8.13.0",
     "express": "^4.19.2",
     "knex": "^2.5.1",
+    "module-alias": "^2.2.3",
     "morgan": "^1.10.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "typescript": "^5.8.3"
   },
   "devDependencies": {
     "@stoplight/spectral-cli": "^6.14.1",
+    "@types/body-parser": "^1.19.6",
+    "@types/compression": "^1.8.1",
+    "@types/express": "^5.0.3",
     "esbuild": "^0.25.5",
     "husky": "^7.0.4",
-    "prettier": "^2.8.8"
+    "prettier": "^2.8.8",
+    "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2",
+    "tslint": "^5.20.1"
   },
   "scripts": {
     "test": "./scripts/tests.sh",
     "test-server": "NODE_ENV=test;node server.js",
-    "start": "node server.js",
+    "start": "ts-node -r tsconfig-paths/register app/server.ts",
+    "build": "tsc",
     "git-check": "./scripts/npm/git-check.sh",
     "beautify": "./scripts/beautify.sh",
     "dist": "./scripts/dist.sh",
     "prepare": "husky install",
-    "lint-docs": "./node_modules/@stoplight/spectral-cli/dist/index.js lint docs/api/spec.yaml --ruleset spectral.yaml"
+    "lint-docs": "./node_modules/@stoplight/spectral-cli/dist/index.js lint docs/api/spec.yaml --ruleset spectral.yaml",
+    "webpack": "webpack --config webpack.config.js"
   },
+  "": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sahilnarain/node-api-boilerplate"

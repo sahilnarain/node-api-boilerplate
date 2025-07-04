@@ -1,11 +1,11 @@
 'use strict';
 
-const config = require('app/configs/config');
-const status = require('app/configs/status');
+import { HEALTHCHECKS } from 'app/configs/config';
+import { getStatus } from 'app/configs/status';
 
-const wrapperService = require('app/services/wrapper');
+import { wrap } from 'app/services/wrapper';
 
-const healthchecksModel = require('app/models/healthchecks');
+import { check } from 'app/models/healthchecks';
 
 const init = async () => {
   if (`${process.env.NODE_ENV}` === 'test') {
@@ -13,12 +13,12 @@ const init = async () => {
   }
 
   let selfOptions = {
-    url: config.HEALTHCHECKS.DEPLOY_BASE_URL + '/healthchecks',
+    url: HEALTHCHECKS.DEPLOY_BASE_URL + '/healthchecks',
     method: 'GET'
   };
 
   let healthcheckOptions = {
-    url: config.HEALTHCHECKS.DEPLOY_BASE_URL + '/healthchecks',
+    url: HEALTHCHECKS.DEPLOY_BASE_URL + '/healthchecks',
     method: 'GET'
   };
 
@@ -37,17 +37,17 @@ const init = async () => {
 };
 
 const healthchecks = async () => {
-  let result = await healthchecksModel.check();
+  let result = await check();
 
   if (!result) {
     throw new Error('generic_fail');
   }
 
-  let response = status.getStatus('success');
+  let response = getStatus('success');
   return response;
 };
 
-module.exports = {
-  init: wrapperService.wrap(init),
-  healthchecks: wrapperService.wrap(healthchecks)
+export default {
+  init: wrap(init),
+  healthchecks: wrap(healthchecks)
 };
