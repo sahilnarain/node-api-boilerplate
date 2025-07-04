@@ -8,5 +8,4 @@ const config = {
   SERVER_PORT: process.env.PORT || 3000
 } as CommonConfig;
 
-module.exports = config;
 export default config;

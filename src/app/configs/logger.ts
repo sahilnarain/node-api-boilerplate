@@ -51,8 +51,3 @@ export default {
   customLogFormat: _customLogFormat,
   devLogStream: _devLogStream
 }
-
-module.exports = {
-  customLogFormat: _customLogFormat,
-  devLogStream: _devLogStream
-}

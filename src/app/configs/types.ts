@@ -5,6 +5,7 @@ export interface Config extends CommonConfig, EnviornmentConfig { }
 export interface CommonConfig {
     SERVER_IP: string
     SERVER_PORT: number
+    IPV6?: boolean
 }
 
 export interface EnviornmentConfig {

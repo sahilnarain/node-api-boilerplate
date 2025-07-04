@@ -41,10 +41,6 @@ export const getStatus = (code: string): Status => {
   return status;
 };
 
-module.exports = {
-  getStatus: getStatus
-}
-
 export default {
   getStatus
 }

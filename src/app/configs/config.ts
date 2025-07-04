@@ -7,5 +7,5 @@ export const config: Config = {
   ...environment
 };
 
-module.exports = config;
 export default config;
+module.exports = config

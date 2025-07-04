@@ -1,38 +1,52 @@
-'use strict';
+import placeholderService from "app/services/placeholder";
+import wrapperService from "app/services/wrapper";
+import { Controller } from 'types';
 
-const placeholderService = require('app/services/placeholder');
-const wrapperService = require('app/services/wrapper');
+export type CreatePlaceholderBody = {
+  param1: string
+}
 
-// eslint-disable-next-line no-unused-vars
-const createPlaceholder = async (req, res, next) => {
-  if (!req.body.param1) {
+export type GetPlaceholersBody = {
+  param1?: string
+}
+
+export type GetPlaceholderBody = {
+  placeholder_id: number
+}
+
+export type UpdatePlaceholderBody = {
+  param1?: string
+  placeholder_id?: number
+}
+
+const createPlaceholder: Controller = async (req, res) => {
+  const param = req.body as CreatePlaceholderBody;
+  if (!param.param1) {
     throw new Error('input_missing');
   }
 
-  let placeholderParams = {};
-  placeholderParams.param1 = req.body.param1;
-
-  let result = await placeholderService.createPlaceholder(placeholderParams);
+  let result = await placeholderService.createPlaceholder(param);
 
   return res.json(result);
 };
 
 // eslint-disable-next-line no-unused-vars
-const getPlaceholders = async (req, res, next) => {
-  let placeholderParams = {};
+const getPlaceholders:Controller = async (req, res) => {
+  const param = req.body as GetPlaceholersBody
 
-  let result = await placeholderService.getPlaceholders(placeholderParams);
+  let result = await placeholderService.getPlaceholders(param);
 
   return res.json(result);
 };
 
 // eslint-disable-next-line no-unused-vars
-const getPlaceholder = async (req, res, next) => {
+const getPlaceholder: Controller= async (req, res) => {
+  req.body as GetPlaceholderBody;
   if (!req.params.placeholder_id) {
     throw new Error('input_missing');
   }
 
-  let placeholderParams = {};
+  let placeholderParams: any = {};
   placeholderParams.placeholderId = parseInt(req.params.placeholder_id);
 
   let result = await placeholderService.getPlaceholder(placeholderParams);
@@ -41,12 +55,13 @@ const getPlaceholder = async (req, res, next) => {
 };
 
 // eslint-disable-next-line no-unused-vars
-const updatePlaceholder = async (req, res, next) => {
+const updatePlaceholder: Controller = async (req, res) => {
+  req.body as UpdatePlaceholderBody;
   if (!req.params.placeholder_id) {
     throw new Error('input_missing');
   }
 
-  let placeholderParams = {};
+  let placeholderParams: any = {};
   placeholderParams.placeholderId = parseInt(req.params.placeholder_id);
   req.body.param1 ? (placeholderParams.param1 = req.body.param1) : null;
 
@@ -55,9 +70,9 @@ const updatePlaceholder = async (req, res, next) => {
   return res.json(result);
 };
 
-module.exports = {
+export default {
   createPlaceholder: wrapperService.wrap(createPlaceholder),
   getPlaceholders: wrapperService.wrap(getPlaceholders),
   getPlaceholder: wrapperService.wrap(getPlaceholder),
   updatePlaceholder: wrapperService.wrap(updatePlaceholder)
-};
+}

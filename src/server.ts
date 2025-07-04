@@ -1,27 +1,25 @@
-'use strict';
 
 // Include core libraries
-import 'module-alias/register';
 import express from 'express';
 import bodyParser from 'body-parser';
-import fs from 'fs';
 import compression from 'compression';
 
+import authsMiddleware from 'app/middlewares/auths';
 import healthchecks from 'app/services/healthchecks';
 
-const app = express();
 
 // Include config files
 import config from 'app/configs/config';
 import status from 'app/configs/status';
 import loggerConfig from 'app/configs/logger';
 
+const app = express();
+
 const isDeveloping = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
 
 app.disable('x-powered-by');
 
 // Include middleware
-import authsMiddleware from 'app/middlewares/auths';
 
 // Include routers
 import healthchecksRouter from 'app/routes/healthchecks';
@@ -54,7 +52,7 @@ const dbSelfCheck = async () => {
     console.log('MySQL connection error', e);
   }
 };
-dbSelfCheck();
+// dbSelfCheck();
 
 // Set allowed headers
 // eslint-disable-next-line no-unused-vars

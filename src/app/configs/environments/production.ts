@@ -32,5 +32,5 @@ const config: EnviornmentConfig = {
   HEALTHCHECKS: HEALTHCHECKS
 };
 
-module.exports = config;
 export default config;
+module.exports = config;
