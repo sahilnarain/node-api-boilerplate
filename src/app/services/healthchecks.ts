@@ -2,7 +2,7 @@ import config from "app/configs/config";
 import status from "app/configs/status";
 import wrapperService from 'app/services/wrapper';
 import healthchecksModel from 'app/models/healthchecks';
-import type { Status } from 'app/configs/types';
+import type { Status } from 'types';
 
 const init = async () => {
   if (`${process.env.NODE_ENV}` === 'test') {

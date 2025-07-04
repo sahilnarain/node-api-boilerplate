@@ -1,5 +1,5 @@
 
-import { EnviornmentConfig, HealthChecksConfig, KnexConfig, MysqlConnectionString } from 'app/configs/types';
+import { EnviornmentConfig, HealthChecksConfig, KnexConfig, MysqlConnectionString } from 'types';
 
 import Knex from 'knex';
 import os from 'os';

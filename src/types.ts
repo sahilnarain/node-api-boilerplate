@@ -1,5 +1,5 @@
+import { Knex } from 'knex';
 import type { Request, Response, NextFunction } from 'express';
-import { Status } from 'app/configs/types';
 
 export type JSONValue =
   | string
@@ -17,3 +17,39 @@ export interface APIResponse extends Status {
 
 export type Middleware = (req: Request, res: Response, next: NextFunction) => any
 
+export interface Config extends CommonConfig, EnviornmentConfig { }
+
+export interface CommonConfig {
+    SERVER_IP: string
+    SERVER_PORT: number
+    IPV6?: boolean
+}
+
+export interface EnviornmentConfig {
+    knex: Knex,
+    MORGAN_LOG_PATH: string
+    HEALTHCHECKS: HealthChecksConfig
+}
+
+export type KnexConfig = { client: 'mysql', connection: MysqlConnectionString }
+
+export type MysqlConnectionString = {
+    host: string
+    user: string
+    password: string
+    database: string
+    port: number
+}
+
+export type HealthChecksConfig = {
+    DEPLOY_BASE_URL: string
+    URL: string
+}
+
+export type getStatusFn = (code: string) => Status
+
+export type Status = {
+    code: string
+    error: boolean
+    message: string
+}

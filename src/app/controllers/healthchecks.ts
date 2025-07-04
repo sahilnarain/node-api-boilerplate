@@ -1,7 +1,6 @@
 import healthchecksService from "app/services/healthchecks";
 import wrapperService from "app/services/wrapper";
-import { Status } from "app/configs/types";
-import { Controller } from 'types';
+import { Controller, Status } from 'types';
 
 
 const healthchecks: Controller<Status> = async (req, res) => {

@@ -1,4 +1,4 @@
-import type { Status } from 'app/configs/types';
+import type { Status } from 'types';
 
 export const getStatus = (code: string): Status => {
   let status = null as Status | null;

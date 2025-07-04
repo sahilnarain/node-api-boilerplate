@@ -1,5 +1,5 @@
 'use strict';
-import type { CommonConfig } from 'app/configs/types';
+import type { CommonConfig } from 'types';
 
 const IPV6 = true;
 
