@@ -1,11 +1,10 @@
 import config from "app/configs/config";
 import utilsService from "app/services/utils";
 import wrapperService from "app/services/wrapper";
+import { JSONValue } from 'types';
 
-export type CheckFn = () => Promise<any>
 
-
-const check: CheckFn = async () => {
+const check = async (): Promise<JSONValue> => {
   const checkQuery = config.knex.select(config.knex.raw('now()'));
 
   let result = await checkQuery;

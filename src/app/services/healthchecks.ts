@@ -4,10 +4,7 @@ import wrapperService from 'app/services/wrapper';
 import healthchecksModel from 'app/models/healthchecks';
 import type { Status } from 'app/configs/types';
 
-export type InitFn = () => Promise<void>
-export type HealthchecksFn = () => Promise<Status>
-
-const init: InitFn = async () => {
+const init = async () => {
   if (`${process.env.NODE_ENV}` === 'test') {
     return;
   }
@@ -36,7 +33,7 @@ const init: InitFn = async () => {
   }, 30000);
 };
 
-const healthchecks: HealthchecksFn = async () => {
+const healthchecks = async (): Promise<Status> => {
   let result = await healthchecksModel.check();
 
   if (!result) {

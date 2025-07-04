@@ -1,16 +1,6 @@
-'use strict';
-
 import https from 'https'
 import config from "app/configs/config";
-
-export type JSONValue =
-  | string
-  | number
-  | boolean
-  | null
-  | { [x: string]: JSONValue }
-  | JSONValue[] // Need to move this globally
-
+import { JSONValue } from 'types';
 
 const sanitizeSqlResult = <T>(result: T): JSONValue => {
   return JSON.parse(JSON.stringify(result));

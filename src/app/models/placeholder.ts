@@ -3,29 +3,24 @@ import utilsService from "app/services/utils";
 import wrapperService from "app/services/wrapper";
 import type { JSONValue } from 'types';
 
-export type CreatePlaceHolderParam = {
+export type CreatePlaceholderInput = {
   param1: string
 }
 
-export type GetPlaceholdersParams = {
+export type GetPlaceholdersInput = {
   placeholderId?: number
 }
 
-export type GetPlaceholderParams = Partial<Omit<GetPlaceholdersParams, 'placeholderId'>> & {
+export type GetPlaceholerInput = {
   placeholderId: number
 }
 
-export type UpdatePlaceholderParams = GetPlaceholderParams & {
+export type UpdatePlaceholderInput = {
   param1: string
+  placeholderId: number
 }
 
-export type CreatePlaceHolderFn = (params: CreatePlaceHolderParam) => Promise<number>
-export type GetPlaceholdersFn = (params: GetPlaceholdersParams) => Promise<JSONValue>
-export type GetPlaceholderFn = (params: GetPlaceholderParams) => Promise<null | JSONValue>
-export type UpdatePlaceholderFn = (params: UpdatePlaceholderParams) => Promise<boolean>
-
-
-const createPlaceholder: CreatePlaceHolderFn = async (params) => {
+const createPlaceholder = async (params: CreatePlaceholderInput): Promise<number> => {
   if (!params.param1) {
     throw new Error('input_missing');
   }
@@ -41,7 +36,7 @@ const createPlaceholder: CreatePlaceHolderFn = async (params) => {
   return result[0];
 };
 
-const getPlaceholders: GetPlaceholdersFn = async (params) => {
+const getPlaceholders = async (params: GetPlaceholdersInput): Promise<JSONValue> => {
   let getPlaceholdersQuery = config.knex.select('id').from('placeholders').orderBy('id', 'desc');
 
   params.placeholderId ? getPlaceholdersQuery.where('id', params.placeholderId) : null;
@@ -51,7 +46,7 @@ const getPlaceholders: GetPlaceholdersFn = async (params) => {
   return utilsService.sanitizeSqlResult(result);
 };
 
-const getPlaceholder: GetPlaceholderFn = async (params) => {
+const getPlaceholder = async (params: GetPlaceholdersInput): Promise<JSONValue> => {
   if (!params.placeholderId) {
     throw new Error('input_missing');
   }
@@ -65,7 +60,7 @@ const getPlaceholder: GetPlaceholderFn = async (params) => {
   return result[0];
 };
 
-const updatePlaceholder: UpdatePlaceholderFn = async (params) => {
+const updatePlaceholder = async (params: UpdatePlaceholderInput): Promise<JSONValue> => {
   if (!params.placeholderId) {
     throw new Error('input_missing');
   }
