@@ -3,11 +3,11 @@
 const esbuild = require('esbuild');
 const fs = require('fs');
 
-!fs.existsSync(`${__dirname}/../node_modules/app`) ? fs.symlinkSync(`${__dirname}/../app`, `${__dirname}/../node_modules/app`) : null;
+!fs.existsSync(`${__dirname}/../node_modules/app`) ? fs.symlinkSync(`${__dirname}/../dist/app`, `${__dirname}/../node_modules/app`) : null;
 
 const build = async () => {
   await esbuild.build({
-    entryPoints: ['./server.js'],
+    entryPoints: ['./dist/server.js'],
     bundle: true,
     platform: 'node',
     outfile: '.server.js',

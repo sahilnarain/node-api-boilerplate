@@ -1,26 +1,10 @@
 import config from "app/configs/config";
 import utilsService from "app/services/utils";
 import wrapperService from "app/services/wrapper";
-import type { JSONValue } from 'types';
+import type { CreatePlaceholderModelInput, GetPlaceholdersModelInput, GetPlaceholerModelInput, UpdatePlaceholderModelInput, Placeholder } from 'types';
 
-export type CreatePlaceholderInput = {
-  param1: string
-}
 
-export type GetPlaceholdersInput = {
-  placeholderId?: number
-}
-
-export type GetPlaceholerInput = {
-  placeholderId: number
-}
-
-export type UpdatePlaceholderInput = {
-  param1: string
-  placeholderId: number
-}
-
-const createPlaceholder = async (params: CreatePlaceholderInput): Promise<number> => {
+const createPlaceholder = async (params: CreatePlaceholderModelInput): Promise<number> => {
   if (!params.param1) {
     throw new Error('input_missing');
   }
@@ -36,17 +20,17 @@ const createPlaceholder = async (params: CreatePlaceholderInput): Promise<number
   return result[0];
 };
 
-const getPlaceholders = async (params: GetPlaceholdersInput): Promise<JSONValue> => {
-  let getPlaceholdersQuery = config.knex.select('id').from('placeholders').orderBy('id', 'desc');
+const getPlaceholders = async (params: GetPlaceholdersModelInput): Promise<Placeholder[]> => {
+  let getPlaceholdersQuery = config.knex.select('id').select('param1').select('active').select('created_at').select('updated_at').select('deleted_at').from('placeholders').orderBy('id', 'desc');
 
   params.placeholderId ? getPlaceholdersQuery.where('id', params.placeholderId) : null;
 
-  let result = await getPlaceholdersQuery;
+  let result: Placeholder[] = await getPlaceholdersQuery;
 
   return utilsService.sanitizeSqlResult(result);
 };
 
-const getPlaceholder = async (params: GetPlaceholdersInput): Promise<JSONValue> => {
+const getPlaceholder = async (params: GetPlaceholerModelInput): Promise<Placeholder | null> => {
   if (!params.placeholderId) {
     throw new Error('input_missing');
   }
@@ -56,11 +40,10 @@ const getPlaceholder = async (params: GetPlaceholdersInput): Promise<JSONValue> 
     return null;
   }
 
-  // @ts-ignore
   return result[0];
 };
 
-const updatePlaceholder = async (params: UpdatePlaceholderInput): Promise<JSONValue> => {
+const updatePlaceholder = async (params: UpdatePlaceholderModelInput): Promise<boolean> => {
   if (!params.placeholderId) {
     throw new Error('input_missing');
   }

@@ -1,33 +1,16 @@
 import status from 'app/configs/status';
 import wrapperService from 'app/services/wrapper';
 import placeholderModel from 'app/models/placeholder';
-import { APIResponse } from 'types';
+import { APIResponse, CreatePlaceholderServiceInput, GetPlaceholdersServiceInput, GetPlaceholderServiceInput, UpdatePlaceholderServiceInput } from 'types';
 
-export type CreatePlaceholderInput = {
-  param1: string
-}
-
-export type GetPlaceholdersInput = {
-  param1?: string
-}
-
-export type GetPlaceholderInput = {
-  placeholderId: number
-}
-
-export type UpdatePlaceholderInput = {
-  placeholderId: number
-  param1: string
-}
-
-const createPlaceholder = async (params: CreatePlaceholderInput): Promise<APIResponse> => {
+const createPlaceholder = async (params: CreatePlaceholderServiceInput): Promise<APIResponse> => {
   if (!params.param1) {
     throw new Error('input_missing');
   }
 
   let placeholderId = await placeholderModel.createPlaceholder(params);
 
-  let result = await placeholderModel.getPlaceholder({placeholderId});
+  let result = await placeholderModel.getPlaceholder({ placeholderId });
 
   let response = status.getStatus('success') as APIResponse;
   response.data = {};
@@ -36,7 +19,7 @@ const createPlaceholder = async (params: CreatePlaceholderInput): Promise<APIRes
   return response;
 };
 
-const getPlaceholders = async (params: GetPlaceholdersInput): Promise<APIResponse> => {
+const getPlaceholders = async (params: GetPlaceholdersServiceInput): Promise<APIResponse> => {
   let placeholderParams: any = {};
   params.param1 ? (placeholderParams.param1 = params.param1) : null;
 
@@ -49,7 +32,7 @@ const getPlaceholders = async (params: GetPlaceholdersInput): Promise<APIRespons
   return response;
 };
 
-const getPlaceholder = async (params: GetPlaceholderInput): Promise<APIResponse> => {
+const getPlaceholder = async (params: GetPlaceholderServiceInput): Promise<APIResponse> => {
   if (!params.placeholderId) {
     throw new Error('input_missing');
   }
@@ -66,7 +49,7 @@ const getPlaceholder = async (params: GetPlaceholderInput): Promise<APIResponse>
   return response;
 };
 
-const updatePlaceholder = async (params: UpdatePlaceholderInput): Promise<APIResponse> => {
+const updatePlaceholder = async (params: UpdatePlaceholderServiceInput): Promise<APIResponse> => {
   if (!params.placeholderId || !params.param1) {
     throw new Error('input_missing');
   }
