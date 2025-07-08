@@ -1,10 +1,10 @@
 import config from "app/configs/config";
 import utilsService from "app/services/utils";
 import wrapperService from "app/services/wrapper";
-import type { CreatePlaceholderModelInput, GetPlaceholdersModelInput, GetPlaceholerModelInput, UpdatePlaceholderModelInput, Placeholder } from 'types';
+import type {CreatePlaceholderOperation, GetPlaceholdersOperation, GetPlaceholderOperation, UpdatePlaceholderOperation, Placeholder} from 'types';
 
 
-const createPlaceholder = async (params: CreatePlaceholderModelInput): Promise<number> => {
+const createPlaceholder = async (params: CreatePlaceholderOperation): Promise<number> => {
   if (!params.param1) {
     throw new Error('input_missing');
   }
@@ -20,7 +20,7 @@ const createPlaceholder = async (params: CreatePlaceholderModelInput): Promise<n
   return result[0];
 };
 
-const getPlaceholders = async (params: GetPlaceholdersModelInput): Promise<Placeholder[]> => {
+const getPlaceholders = async (params: GetPlaceholdersOperation): Promise<Placeholder[]> => {
   let getPlaceholdersQuery = config.knex.select('id').select('param1').select('active').select('created_at').select('updated_at').select('deleted_at').from('placeholders').orderBy('id', 'desc');
 
   params.placeholderId ? getPlaceholdersQuery.where('id', params.placeholderId) : null;
@@ -30,7 +30,7 @@ const getPlaceholders = async (params: GetPlaceholdersModelInput): Promise<Place
   return utilsService.sanitizeSqlResult(result);
 };
 
-const getPlaceholder = async (params: GetPlaceholerModelInput): Promise<Placeholder | null> => {
+const getPlaceholder = async (params: GetPlaceholderOperation): Promise<Placeholder | null> => {
   if (!params.placeholderId) {
     throw new Error('input_missing');
   }
@@ -43,7 +43,7 @@ const getPlaceholder = async (params: GetPlaceholerModelInput): Promise<Placehol
   return result[0];
 };
 
-const updatePlaceholder = async (params: UpdatePlaceholderModelInput): Promise<boolean> => {
+const updatePlaceholder = async (params: UpdatePlaceholderOperation): Promise<boolean> => {
   if (!params.placeholderId) {
     throw new Error('input_missing');
   }

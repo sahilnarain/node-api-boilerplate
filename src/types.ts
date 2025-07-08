@@ -1,5 +1,5 @@
 import { Knex } from 'knex';
-import type { Request, Response, NextFunction } from 'express';
+import { type Request, type Response, type NextFunction, request } from 'express';
 
 export type JSONValue<T = any> =
     | string
@@ -10,11 +10,8 @@ export type JSONValue<T = any> =
     | JSONValue[]
     | T
 
-export type Controller<Res = APIResponse> = (req: Request, res: Response<Res>) => any;
+export type Controller<T = any> = (req: Request, res: Response<APIResponse<T>>) => any;
 
-export interface APIResponse extends Status {
-    data: any;
-}
 
 export type Middleware = (req: Request, res: Response, next: NextFunction) => any;
 
@@ -56,6 +53,9 @@ export type Status = {
     message: string;
 }
 
+export interface APIResponse<T = any> extends Status {
+    data?: T;
+}
 
 /**
  * Entity Types
@@ -102,7 +102,7 @@ export type CreatePlaceholderServiceInput = {
 }
 
 export type GetPlaceholdersServiceInput = {
-    param1?: string;
+    placeholderId?: string;
 }
 
 export type GetPlaceholderServiceInput = {
@@ -114,26 +114,80 @@ export type UpdatePlaceholderServiceInput = {
     param1: string;
 }
 
+/**
+ * Operation 
+ */
+
+export type CreatePlaceholderOperation = {
+    param1: string;
+}
+
+export type GetPlaceholdersOperation = {
+    placeholderId?: number;
+}
+
+export type GetPlaceholderOperation = {
+    placeholderId: number;
+}
+
+export type UpdatePlaceholderOperation = {
+    placeholderId: number;
+    param1: string
+}
+
 
 /**
  * Controller
  */
 
 
-export type CreatePlaceholderControllerBody = {
-    param1: string;
+export interface CreatePlaceholderRequest extends Request {
+    body: {
+        param1: string
+    }
 }
 
-export type GetPlaceholersControllerBody = {
-    param1?: string;
+export interface CreatePlaceholderResponse {
+    placeholder: Placeholder
 }
 
-export type GetPlaceholderControllerBody = {
-    placeholder_id: number;
+
+export interface GetPlaceholdersRequest extends Request {
+    body: {
+        placeholder_id?: number
+    }
 }
 
-export type UpdatePlaceholderControllerBody = {
-    param1?: string;
-    placeholder_id?: number;
+export interface GetPlaceholersResponse {
+    placeholder: Placeholder[]
 }
 
+export interface GetplaceholderRequest extends Request {
+    body: {
+        placeholder_id: number
+    }
+}
+
+export interface GetplaceholderResponse {
+    placeholder: Placeholder
+}
+
+export interface UpdatePlaceholderRequest extends Request {
+    body: {
+        param1?: string
+        placeholder_id?: number
+    }
+}
+
+export interface UpdatePlaceholderResponse {
+    placeholder: Placeholder
+}
+
+export type TempController<Req, Res> = (req: Req, res: Response<Res>) => any
+
+
+type Something = {
+    [x in p]: Object;
+};
+
+type p = 'user'

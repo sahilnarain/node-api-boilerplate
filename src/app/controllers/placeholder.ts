@@ -1,10 +1,10 @@
 import placeholderService from "app/services/placeholder";
 import wrapperService from "app/services/wrapper";
-import { Controller, CreatePlaceholderControllerBody, GetPlaceholersControllerBody, GetPlaceholderControllerBody, UpdatePlaceholderControllerBody } from 'types';
+import { Controller, CreatePlaceholderRequest, GetPlaceholdersRequest, GetplaceholderRequest, UpdatePlaceholderRequest, CreatePlaceholderResponse, GetPlaceholersResponse, GetplaceholderResponse, UpdatePlaceholderResponse, APIResponse } from 'types';
 
 
-const createPlaceholder: Controller = async (req, res) => {
-  const param = req.body as CreatePlaceholderControllerBody;
+const createPlaceholder: Controller<CreatePlaceholderResponse> = async (req: CreatePlaceholderRequest, res) => {
+  const param = req.body;
   if (!param.param1) {
     throw new Error('input_missing');
   }
@@ -15,17 +15,16 @@ const createPlaceholder: Controller = async (req, res) => {
 };
 
 // eslint-disable-next-line no-unused-vars
-const getPlaceholders: Controller = async (req, res) => {
-  const param = req.body as GetPlaceholersControllerBody
+const getPlaceholders: Controller<GetPlaceholersResponse> = async (req: GetPlaceholdersRequest, res) => {
+  const param = req.body
 
-  let result = await placeholderService.getPlaceholders(param);
+  let result = await placeholderService.getPlaceholders({ placeholderId: param.placeholder_id });
 
   return res.json(result);
 };
 
 // eslint-disable-next-line no-unused-vars
-const getPlaceholder: Controller = async (req, res) => {
-  req.body as GetPlaceholderControllerBody;
+const getPlaceholder: Controller<GetplaceholderResponse> = async (req: GetplaceholderRequest, res) => {
   if (!req.params.placeholder_id) {
     throw new Error('input_missing');
   }
@@ -39,8 +38,7 @@ const getPlaceholder: Controller = async (req, res) => {
 };
 
 // eslint-disable-next-line no-unused-vars
-const updatePlaceholder: Controller = async (req, res) => {
-  req.body as UpdatePlaceholderControllerBody;
+const updatePlaceholder: Controller<UpdatePlaceholderResponse> = async (req: UpdatePlaceholderRequest, res) => {
   if (!req.params.placeholder_id) {
     throw new Error('input_missing');
   }
