@@ -10,7 +10,7 @@ export type JSONValue<T = any> =
     | JSONValue[]
     | T
 
-export type Controller<T = any> = (req: Request, res: Response<APIResponse<T>>) => any;
+export type Controller<T = any> = (req: Request<any>, res: Response<APIResponse<T>>) => any;
 
 
 export type Middleware = (req: Request, res: Response, next: NextFunction) => any;
@@ -162,13 +162,13 @@ export interface GetPlaceholersResponse {
     placeholder: Placeholder[]
 }
 
-export interface GetplaceholderRequest extends Request {
-    body: {
+export interface GetPlaceholderRequest extends Request<any> {
+    params: {
         placeholder_id: number
     }
 }
 
-export interface GetplaceholderResponse {
+export interface GetPlaceholderResponse {
     placeholder: Placeholder
 }
 
