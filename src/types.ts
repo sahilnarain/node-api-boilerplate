@@ -70,49 +70,8 @@ export type Placeholder = {
     deleted_at: Date;
 }
 
-/**
- * Model Types
- */
-
-export type CreatePlaceholderModelInput = {
-    param1: string;
-}
-
-export type GetPlaceholdersModelInput = {
-    placeholderId?: number;
-}
-
-export type GetPlaceholerModelInput = {
-    placeholderId: number;
-}
-
-export type UpdatePlaceholderModelInput = {
-    param1: string;
-    placeholderId: number;
-}
 
 
-/**
- * Service Types
- */
-
-
-export type CreatePlaceholderServiceInput = {
-    param1: string;
-}
-
-export type GetPlaceholdersServiceInput = {
-    placeholderId?: string;
-}
-
-export type GetPlaceholderServiceInput = {
-    placeholderId: number;
-}
-
-export type UpdatePlaceholderServiceInput = {
-    placeholderId: number;
-    param1: string;
-}
 
 /**
  * Operation 
