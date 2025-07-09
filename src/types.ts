@@ -91,7 +91,7 @@ export type GetPlaceholderOperation = {
 
 export type UpdatePlaceholderOperation = {
     placeholderId: number;
-    param1: string
+    param1: string;
 }
 
 
@@ -102,51 +102,44 @@ export type UpdatePlaceholderOperation = {
 
 export interface CreatePlaceholderRequest extends Request {
     body: {
-        param1: string
+        param1: string;
     }
 }
 
 export interface CreatePlaceholderResponse {
-    placeholder: Placeholder
+    placeholder: Placeholder;
 }
 
 
 export interface GetPlaceholdersRequest extends Request {
     body: {
-        placeholder_id?: number
+        placeholder_id?: number;
     }
 }
 
 export interface GetPlaceholersResponse {
-    placeholder: Placeholder[]
+    placeholder: Placeholder[];
 }
 
 export interface GetPlaceholderRequest extends Request<any> {
     params: {
-        placeholder_id: number
+        placeholder_id: number;
     }
 }
 
 export interface GetPlaceholderResponse {
-    placeholder: Placeholder
+    placeholder: Placeholder;
 }
 
 export interface UpdatePlaceholderRequest extends Request {
     body: {
-        param1?: string
-        placeholder_id?: number
+        param1?: string;
+        placeholder_id?: number;
     }
 }
 
 export interface UpdatePlaceholderResponse {
-    placeholder: Placeholder
+    placeholder: Placeholder;
 }
 
-export type TempController<Req, Res> = (req: Req, res: Response<Res>) => any
 
-
-type Something = {
-    [x in p]: Object;
-};
-
-type p = 'user'
