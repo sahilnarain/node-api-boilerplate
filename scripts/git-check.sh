@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "Checking git version..."
 
 MIN_GIT_VERSION=2.22.0

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ./scripts/git-check.sh
 if [ $? -eq 1 ]
 then
