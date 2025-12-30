@@ -1,9 +1,14 @@
+#!/bin/bash
+
 if [ -n "$1" ] && [ "$1" != "--force" ] && [ "$1" != "-f" ]
 then
   NODE_ENV="$1"
 fi
 
 PROJECT_NAME=node-api-boilerplate
+OS=linux
+ARCH=aarch64
+BINARY=`echo $PROJECT_NAME | tr '[:upper:]' '[:lower:]'`-$NODE_ENV-$OS
 
 unstaged_files=($(git diff --name-only))
 
@@ -44,7 +49,31 @@ npm install
 node scripts/build.js
 echo "{\"main\": \".server.js\", \"output\":\"dist/blob.blob\"}" > dist/sea-config.json
 node --experimental-sea-config dist/sea-config.json
-cp $(command -v node) dist/$PROJECT_NAME  && npx postject dist/$PROJECT_NAME NODE_SEA_BLOB dist/blob.blob --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2
+if [[ `uname -m` == $ARCH ]]
+then
+  cp $(command -v node) dist/$BINARY && npx postject dist/$BINARY NODE_SEA_BLOB dist/blob.blob --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2
+else
+  NODE_ARCH=`echo $ARCH | sed 's/aarch64/arm64/'`
+  NODE_DIST_ARCHIVE=node-`node --version`-`uname | tr [:upper:] [:lower:]`-$NODE_ARCH.tar.xz
+  NODE_DOWNLOAD_URL=https://nodejs.org/dist/`node --version`/$NODE_DIST_ARCHIVE
+
+  if [[ ! -d /tmp/$(basename $NODE_DIST_ARCHIVE .tar.xz) ]]
+  then
+    if [[ ! -f /tmp/$NODE_DIST_ARCHIVE ]]
+    then
+      curl -o /tmp/$NODE_DIST_ARCHIVE $NODE_DOWNLOAD_URL
+      if [[ $? -eq 1 ]]
+      then
+        echo "Failed to download node binary for the target architecture. Exiting."
+        exit
+      fi
+      tar -xvf /tmp/$NODE_DIST_ARCHIVE -C /tmp/
+    fi
+  fi
+
+  cp /tmp/$(basename $NODE_DIST_ARCHIVE .tar.xz)/bin/node dist/$BINARY && npx postject dist/$BINARY NODE_SEA_BLOB dist/blob.blob --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2
+fi
+
 rm .server.js
 rm dist/blob.blob
 rm dist/sea-config.json
