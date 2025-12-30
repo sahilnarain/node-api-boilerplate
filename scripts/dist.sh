@@ -51,8 +51,10 @@ echo "{\"main\": \".server.js\", \"output\":\"dist/blob.blob\"}" > dist/sea-conf
 node --experimental-sea-config dist/sea-config.json
 if [[ `uname -m` == $ARCH ]]
 then
+  echo 1
   cp $(command -v node) dist/$BINARY && npx postject dist/$BINARY NODE_SEA_BLOB dist/blob.blob --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2
 else
+  echo 2
   NODE_ARCH=`echo $ARCH | sed 's/aarch64/arm64/'`
   NODE_DIST_ARCHIVE=node-`node --version`-`uname | tr [:upper:] [:lower:]`-$NODE_ARCH.tar.xz
   NODE_DOWNLOAD_URL=https://nodejs.org/dist/`node --version`/$NODE_DIST_ARCHIVE
@@ -67,7 +69,7 @@ else
         echo "Failed to download node binary for the target architecture. Exiting."
         exit
       fi
-      tar -xvf /tmp/$NODE_DIST_ARCHIVE -C /tmp/
+      tar -xvf /tmp/$NODE_DIST_ARCHIVE -C /tmp/ &>/dev/null
     fi
   fi
 
