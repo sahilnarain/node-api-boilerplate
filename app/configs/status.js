@@ -1,23 +1,20 @@
 'use strict';
 
 const getStatus = (code) => {
-  let status = null;
+  let status = {
+    code: code,
+    error: true,
+    message: null
+  };
 
   switch (code) {
     case 'success':
-      status = {
-        code: code,
-        error: false,
-        message: 'Successful'
-      };
+      status.error = false;
+      status.message = 'Successful';
       break;
 
     case 'url_missing':
-      status = {
-        code: code,
-        error: true,
-        message: 'URL not found'
-      };
+      status.message = 'URL not found';
       break;
 
     case 'input_missing':
@@ -30,11 +27,7 @@ const getStatus = (code) => {
 
     case 'generic_fail':
     default:
-      status = {
-        code: 'generic_fail',
-        error: true,
-        message: 'Generic failure: Something went wrong.'
-      };
+      status.message = 'Generic failure: Something went wrong.';
       break;
   }
 
