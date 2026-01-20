@@ -17,6 +17,7 @@
     "mysql": "^2.18.1"
   },
   "devDependencies": {
+    "@apidevtools/swagger-parser": "^12.1.0",
     "@stoplight/spectral-cli": "^6.14.1",
     "esbuild": "^0.25.5",
     "husky": "^7.0.4",
@@ -30,7 +31,8 @@
     "beautify": "./scripts/beautify.sh",
     "dist": "./scripts/dist.sh",
     "prepare": "husky install",
-    "lint-docs": "./node_modules/@stoplight/spectral-cli/dist/index.js lint docs/api/spec.yaml --ruleset spectral.yaml"
+    "lint-docs": "./node_modules/@stoplight/spectral-cli/dist/index.js lint docs/api/spec.yaml --ruleset spectral.yaml",
+    "validate-docs": "node scripts/valiate-docs.js"
   },
   "repository": {
     "type": "git",
