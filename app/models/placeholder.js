@@ -18,7 +18,7 @@ const createPlaceholder = async (params) => {
 
   let result = await createPlaceholderQuery;
 
-  return result[0].insertId;
+  return result[0];
 };
 
 const getPlaceholders = async (params) => {
