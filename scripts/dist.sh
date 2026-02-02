@@ -51,7 +51,6 @@ echo "{\"main\": \".server.js\", \"output\":\"dist/blob.blob\"}" > dist/sea-conf
 node --experimental-sea-config dist/sea-config.json
 if [[ `uname -m` == $ARCH ]]
 then
-  echo 1
   cp $(command -v node) dist/$BINARY && npx postject dist/$BINARY NODE_SEA_BLOB dist/blob.blob --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2
 else
   echo 2
