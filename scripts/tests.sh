@@ -2,8 +2,6 @@
 
 export NODE_ENV=test
 
-# TODO: Read the config for db connection string
-
 CONNECTION_STRING=`awk '/const mysqlConnectionString\s+=\s+{/,/};/' app/configs/environments/test.js`
 DB_HOST=`echo $CONNECTION_STRING | awk -F"host: '" '{print $2}' | awk -F"'" '{print $1}'`
 DB_USER=`echo $CONNECTION_STRING | awk -F"user: '" '{print $2}' | awk -F"'" '{print $1}'`
