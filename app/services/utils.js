@@ -1,6 +1,7 @@
 'use strict';
 
-const https = require('https');
+const dns = require('node:dns').promises;
+const url = require('node:url');
 
 const config = require('app/configs/config');
 
@@ -33,7 +34,7 @@ const sortByDesc = (key) => {
   return (array1, array2) => (array1[key] < array2[key] ? 1 : array2[key] < array1[key] ? -1 : 0);
 };
 
-const prepareFetchOptions = (options) => {
+const prepareFetchOptions = async (options) => {
   if (options.method.toUpperCase() === 'GET') {
     delete options.body;
     options.qs && Object.keys(options.qs).length ? (options.url += '?' + new URLSearchParams(options.qs)) : null;
@@ -43,7 +44,18 @@ const prepareFetchOptions = (options) => {
   options.headers ? (options.headers['Content-Type'] = 'application/json') : null;
   options.body ? (options.body = JSON.stringify(options.body)) : null;
 
-  config.IPV6 ? (options.agent = new https.Agent({family: 6})) : null;
+  if (config.IPV6 && options.force) {
+    let _url = new url.URL(options.url);
+
+    let dnsOptions = {};
+    dnsOptions.family = 6;
+
+    let _ip = await dns.lookup(_url.hostname, {options: dnsOptions});
+
+    let _protocol = options.downgrade ? 'http:' : _url.protocol;
+
+    options.url = _url.port ? `${_protocol}//[${_ip.address}]/${_url.pathname}:${_url.port}` : `${_protocol}//[${_ip.address}]/${_url.pathname}`;
+  }
 
   return options;
 };

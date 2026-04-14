@@ -3,6 +3,7 @@
 const config = require('app/configs/config');
 const status = require('app/configs/status');
 
+const utilsService = require('app/services/utils');
 const wrapperService = require('app/services/wrapper');
 
 const healthchecksModel = require('app/models/healthchecks');
@@ -18,9 +19,12 @@ const init = async () => {
   };
 
   let healthcheckOptions = {
-    url: config.HEALTHCHECKS.DEPLOY_BASE_URL + '/healthchecks',
+    url: config.HEALTHCHECKS.URL + '/healthchecks',
     method: 'GET'
   };
+
+  selfOptions = await utilsService.prepareFetchOptions(selfOptions);
+  healthcheckOptions = await utilsService.prepareFetchOptions(...healthcheckOptions, ...{downgrade: 1, force: 1});
 
   setInterval(async () => {
     let response;
