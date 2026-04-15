@@ -1,15 +1,16 @@
 'use strict';
 
+const undici = require('undici');
+
 const config = require('app/configs/config');
 const status = require('app/configs/status');
 
-const utilsService = require('app/services/utils');
 const wrapperService = require('app/services/wrapper');
 
 const healthchecksModel = require('app/models/healthchecks');
 
 const init = async () => {
-  if (`${process.env.NODE_ENV}` === 'test') {
+  if (`${process.env.NODE_ENV}` !== 'production') {
     return;
   }
 
@@ -19,12 +20,15 @@ const init = async () => {
   };
 
   let healthcheckOptions = {
-    url: config.HEALTHCHECKS.URL + '/healthchecks',
+    url: config.HEALTHCHECKS.URL,
     method: 'GET'
   };
 
-  selfOptions = await utilsService.prepareFetchOptions(selfOptions);
-  healthcheckOptions = await utilsService.prepareFetchOptions(...healthcheckOptions, ...{downgrade: 1, force: 1});
+  if (config.IPV6) {
+    healthcheckOptions.dispatcher = new undici.Agent({connect: {family: 6}});
+    // eslint-disable-next-line no-global-assign
+    fetch = undici.fetch;
+  }
 
   setInterval(async () => {
     let response;
@@ -35,7 +39,11 @@ const init = async () => {
     }
 
     if (response && response.code && response.code === 'success') {
-      await (await fetch(healthcheckOptions.url, healthcheckOptions)).json();
+      try {
+        await fetch(healthcheckOptions.url, healthcheckOptions);
+      } catch (e) {
+        // Do nothing
+      }
     }
   }, 30000);
 };

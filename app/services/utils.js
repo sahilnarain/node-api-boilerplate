@@ -1,10 +1,5 @@
 'use strict';
 
-const dns = require('node:dns').promises;
-const url = require('node:url');
-
-const config = require('app/configs/config');
-
 const sanitizeSqlResult = (result) => {
   return JSON.parse(JSON.stringify(result));
 };
@@ -43,19 +38,6 @@ const prepareFetchOptions = async (options) => {
   options.json ? delete options.json : null;
   options.headers ? (options.headers['Content-Type'] = 'application/json') : null;
   options.body ? (options.body = JSON.stringify(options.body)) : null;
-
-  if (config.IPV6 && options.force) {
-    let _url = new url.URL(options.url);
-
-    let dnsOptions = {};
-    dnsOptions.family = 6;
-
-    let _ip = await dns.lookup(_url.hostname, {options: dnsOptions});
-
-    let _protocol = options.downgrade ? 'http:' : _url.protocol;
-
-    options.url = _url.port ? `${_protocol}//[${_ip.address}]/${_url.pathname}:${_url.port}` : `${_protocol}//[${_ip.address}]/${_url.pathname}`;
-  }
 
   return options;
 };
