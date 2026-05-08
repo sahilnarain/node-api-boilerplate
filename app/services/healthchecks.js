@@ -26,8 +26,8 @@ const init = async () => {
 
   if (config.IPV6) {
     healthcheckOptions.dispatcher = new undici.Agent({connect: {family: 6}});
-    // eslint-disable-next-line no-global-assign
-    fetch = undici.fetch;
+    // eslint-disable-next-line no-unused-vars
+    const fetch = undici.fetch;
   }
 
   setInterval(async () => {
