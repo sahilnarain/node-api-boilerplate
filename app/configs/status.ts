@@ -1,7 +1,9 @@
 'use strict';
 
-const getStatus = (code) => {
-  let status = {
+import type {Status} from 'types/api';
+
+const getStatus = (code: string): Status => {
+  const status: Status = {
     code: code,
     error: true,
     message: null
@@ -30,6 +32,6 @@ const getStatus = (code) => {
   return status;
 };
 
-module.exports = {
+export = {
   getStatus: getStatus
 };

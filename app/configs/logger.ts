@@ -1,9 +1,10 @@
 'use strict';
 
-const fs = require('fs');
-const logger = require('morgan');
+import fs from 'fs';
+import logger from 'morgan';
+import type {Request, Response} from 'express';
 
-const config = require('app/configs/config');
+import config = require('app/configs/config');
 
 // Create log file if it doesn't exist
 fs.existsSync(`${config.MORGAN_LOG_PATH}`)
@@ -11,12 +12,12 @@ fs.existsSync(`${config.MORGAN_LOG_PATH}`)
   : fs.mkdirSync(`${config.MORGAN_LOG_PATH}`, {
       recursive: true
     });
-let _logFile = `${config.MORGAN_LOG_PATH}/morgan.log`;
+const _logFile = `${config.MORGAN_LOG_PATH}/morgan.log`;
 fs.existsSync(_logFile) ? null : fs.writeFileSync(_logFile, new Date().toISOString());
 
 // Configure logging
 // eslint-disable-next-line no-unused-vars
-logger.token('req-body', (req, res) => {
+logger.token('req-body', (req: Request, res: Response) => {
   return JSON.stringify({
     params: req.query,
     body: req.body
@@ -24,17 +25,17 @@ logger.token('req-body', (req, res) => {
 });
 
 // eslint-disable-next-line no-unused-vars
-logger.token('req-headers', (req, res) => {
+logger.token('req-headers', (req: Request, res: Response) => {
   return JSON.stringify(req.headers);
 });
 
 // eslint-disable-next-line no-unused-vars
-logger.token('tracking', (req, res) => {
-  return req.headers['x-device-id'] ? req.headers['x-device-id'] : 'DEFAULT';
+logger.token('tracking', (req: Request, res: Response) => {
+  return req.headers['x-device-id'] ? (req.headers['x-device-id'] as string) : 'DEFAULT';
 });
 
 // eslint-disable-next-line no-unused-vars
-logger.token('uri', (req, res) => {
+logger.token('uri', (req: Request, res: Response) => {
   return req.originalUrl.split('?')[0];
 });
 
@@ -49,7 +50,7 @@ const _customLogFormat = logger(customLogFormat, {
 
 const _devLogStream = logger('dev');
 
-module.exports = {
+export = {
   customLogFormat: _customLogFormat,
   devLogStream: _devLogStream
 };

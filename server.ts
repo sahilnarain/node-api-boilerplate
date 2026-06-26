@@ -1,31 +1,30 @@
 'use strict';
 
 // Include core libraries
-const express = require('express');
-const bodyParser = require('body-parser');
-const fs = require('fs');
-const compression = require('compression');
+import express from 'express';
+import bodyParser from 'body-parser';
+import compression from 'compression';
+import type {Request, Response, NextFunction} from 'express';
 
-!fs.existsSync(`${__dirname}/node_modules/app`) ? fs.symlinkSync(`${__dirname}/app`, `${__dirname}/node_modules/app`) : null;
-const healthchecks = require('app/services/healthchecks');
+import healthchecks = require('app/services/healthchecks');
 
 const app = express();
 
 // Include config files
-const config = require('app/configs/config');
-const status = require('app/configs/status');
-const loggerConfig = require('app/configs/logger');
+import config = require('app/configs/config');
+import status = require('app/configs/status');
+import loggerConfig = require('app/configs/logger');
 
 const isDeveloping = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
 
 app.disable('x-powered-by');
 
 // Include middleware
-const authsMiddleware = require('app/middlewares/auths');
+import authsMiddleware = require('app/middlewares/auths');
 
 // Include routers
-const healthchecksRouter = require('app/routes/healthchecks');
-const placeholderRouter = require('app/routes/placeholder');
+import healthchecksRouter = require('app/routes/healthchecks');
+import placeholderRouter = require('app/routes/placeholder');
 
 // Use JSON body parser
 app.use(compression());
@@ -44,21 +43,21 @@ app.use(
 );
 
 // DB connectivity check
-const dbSelfCheck = async () => {
-  let dbSelfCheckQuery = config.knex.select(config.knex.raw('now()'));
+// const dbSelfCheck = async (): Promise<void> => {
+//   const dbSelfCheckQuery = config.knex.select(config.knex.raw('now()'));
 
-  try {
-    await dbSelfCheckQuery;
-    console.log('Connected to MySQL DB...');
-  } catch (e) {
-    console.log('MySQL connection error', e);
-  }
-};
-dbSelfCheck();
+//   try {
+//     await dbSelfCheckQuery;
+//     console.log('Connected to MySQL DB...');
+//   } catch (e) {
+//     console.log('MySQL connection error', e);
+//   }
+// };
+// dbSelfCheck();
 
 // Set allowed headers
 // eslint-disable-next-line no-unused-vars
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Authorization,User-Agent,X-Auth,X-Version');
 
@@ -72,7 +71,7 @@ app.use((req, res, next) => {
 // Healthcheck routes
 healthchecks.init();
 app.use('/healthchecks', healthchecksRouter);
-app.get('/ping', (req, res) => {
+app.get('/ping', (req: Request, res: Response) => {
   res.send('pong');
 });
 
@@ -92,27 +91,27 @@ app.use('/placeholder', placeholderRouter);
 
 // Catch 404s
 // eslint-disable-next-line no-unused-vars
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   res.statusCode = 404;
   res.json(status.getStatus('url_missing'));
 });
 
 // Global error handler
 // eslint-disable-next-line no-unused-vars
-app.use((err, req, res, next) => {
+app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
   if (err) {
     console.log(new Date().toISOString(), err);
   }
 
-  if (err.hasOwnProperty('error')) {
+  if (err && Object.prototype.hasOwnProperty.call(err, 'error')) {
     res.json(err);
   } else {
-    let err = status.getStatus('generic_fail');
-    res.json(err);
+    const errResponse = status.getStatus('generic_fail');
+    res.json(errResponse);
   }
 });
 
-app.listen(config.SERVER_PORT, config.SERVER_IP, () => {
+app.listen(Number(config.SERVER_PORT), config.SERVER_IP, () => {
   console.log(`########## Environment: ${process.env.NODE_ENV} ##########`);
   console.log(`${new Date()}: Server running on port ${config.SERVER_PORT}...`);
 });

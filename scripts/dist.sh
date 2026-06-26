@@ -6,8 +6,8 @@ then
 fi
 
 PROJECT_NAME=node-api-boilerplate
-OS=linux
-ARCH=aarch64
+OS=darwin
+ARCH=arm64
 BINARY=`echo $PROJECT_NAME | tr '[:upper:]' '[:lower:]'`-$NODE_ENV-$OS
 
 unstaged_files=($(git diff --name-only))
@@ -21,32 +21,20 @@ then
   exit 1
 fi
 
-environment_files=($(grep -rl "process.env.NODE_ENV === '$NODE_ENV'" app/* *.js*))
-
-for file in "${environment_files[@]}"
-do
-  sed -i.bak -e "s/process.env.NODE_ENV === '$NODE_ENV'/true/g" "$file"
-  rm "$file".bak
-done
-
-files=($(grep -rl "process.env.NODE_ENV" app/* *.js*))
-
-for file in "${files[@]}"
-do
-  sed -i.bak -e "s/\`\(.*\)\${process.env.NODE_ENV}\(.*\)\`/\'\1"$NODE_ENV"\2\'/g" "$file"
-  rm "$file".bak
-done
-
-sed -i.bak -e 's/!fs.exists/\/\/!fs.exists/' server.js
-rm server.js.bak
-
 if [ ! -d 'dist' ]
 then
   mkdir dist
 fi
 
 npm install
-node scripts/build.js
+
+# Compile TypeScript -> dist/js
+npx tsc
+
+# Bundle dist/js/server.js into .server.js. esbuild inlines process.env.NODE_ENV
+# (see scripts/build.js's `define`) so the binary is locked to this environment
+# and the env branches are dead-code-eliminated -- without mutating any source.
+NODE_ENV="$NODE_ENV" node scripts/build.js
 echo "{\"main\": \".server.js\", \"output\":\"dist/blob.blob\"}" > dist/sea-config.json
 node --experimental-sea-config dist/sea-config.json
 if [[ `uname -m` == $ARCH ]]
@@ -78,13 +66,3 @@ fi
 rm .server.js
 rm dist/blob.blob
 rm dist/sea-config.json
-
-for file in "${environment_files[@]}"
-do
- git checkout "$file"
-done
-
-for file in "${files[@]}"
-do
- git checkout "$file"
-done

@@ -1,0 +1,7 @@
+node_modules
+dist
+
+# TypeScript sources are type-checked by `tsc` and formatted by Prettier.
+# The base ESLint config uses the default JS parser, which cannot parse TS.
+# Add typescript-eslint if you want lint rules to cover .ts files.
+*.ts
