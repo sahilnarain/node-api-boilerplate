@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    /* Language and environment */
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "ignoreDeprecations": "6.0",
+
+    /* Project layout: compile everything under the repo root into dist/js,
+       preserving the app/ and types/ directory structure. */
+    "rootDir": ".",
+    "outDir": "dist/js",
+
+    /* Keep the existing `app/...` style imports working at compile time.
+       At runtime these resolve via NODE_PATH=dist/js (see package.json scripts). */
+    "paths": {
+      "app/*": ["./app/*"],
+      "types/*": ["./types/*"]
+    },
+
+    /* Allow JS and TS to coexist during/after the migration. */
+    "allowJs": true,
+    "checkJs": false,
+
+    /* Interop / module behaviour. */
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Strictness: full strict mode, no implicit/explicit any. */
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+
+    /* Output. */
+    "sourceMap": true,
+    "declaration": false,
+    "removeComments": false
+  },
+  "include": ["server.ts", "app/**/*.ts", "types/**/*.ts", "types/**/*.d.ts"],
+  "exclude": ["node_modules", "dist", "tests", "scripts"]
+}

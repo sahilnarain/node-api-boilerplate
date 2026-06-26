@@ -2,7 +2,7 @@
 
 export NODE_ENV=test
 
-CONNECTION_STRING=`awk '/const mysqlConnectionString\s+=\s+{/,/};/' app/configs/environments/test.js`
+CONNECTION_STRING=`awk '/const mysqlConnectionString.*=.*{/,/};/' app/configs/environments/test.ts`
 DB_HOST=`echo $CONNECTION_STRING | awk -F"host: '" '{print $2}' | awk -F"'" '{print $1}'`
 DB_USER=`echo $CONNECTION_STRING | awk -F"user: '" '{print $2}' | awk -F"'" '{print $1}'`
 DB_PASS=`echo $CONNECTION_STRING | awk -F"password: '" '{print $2}' | awk -F"'" '{print $1}'`
@@ -12,9 +12,12 @@ TEST_DATABASE_NAME="$DB_DATABASE"_`cat /dev/urandom | tr -dc 'a-f0-9' | head -c 
 
 SETUP_DB_COMMAND="CREATE DATABASE IF NOT EXISTS $TEST_DATABASE_NAME; GRANT ALL PRIVILEGES ON $TEST_DATABASE_NAME TO '$DB_USER'@'%'; FLUSH PRIVILEGES;"
 mysql -h $DB_HOST -u $DB_USER --port $DB_PORT --password=$DB_PASS --database $DB_DATABASE -e "$SETUP_DB_COMMAND" &> /dev/null
-sed -i "s/$DB_DATABASE/$TEST_DATABASE_NAME/" app/configs/environments/test.js
+sed -i "s/$DB_DATABASE/$TEST_DATABASE_NAME/" app/configs/environments/test.ts
 
-node server.js &> /dev/null &
+# Compile TypeScript (with the patched test DB name) into dist/js before booting.
+npx tsc
+
+NODE_PATH=./dist/js node dist/js/server.js &> /dev/null &
 NODE_SERVER_PID=`echo $!`
 
 while :
@@ -28,9 +31,9 @@ do
   fi
 done
 
-TEST_DATABASE_NAME=$TEST_DATABASE_NAME node --test --test-concurrency=1 --experimental-test-coverage --test-force-exit --test-timeout 30000 tests/api/*.test.js
+TEST_DATABASE_NAME=$TEST_DATABASE_NAME NODE_PATH=./dist/js node --test --test-concurrency=1 --experimental-test-coverage --test-force-exit --test-timeout 30000 tests/api/*.test.js
 
-sed -i "s/$TEST_DATABASE_NAME/$DB_DATABASE/" app/configs/environments/test.js
+sed -i "s/$TEST_DATABASE_NAME/$DB_DATABASE/" app/configs/environments/test.ts
 TEARDOWN_DB_COMMAND="DROP DATABASE IF EXISTS $TEST_DATABASE_NAME;"
 mysql -h $DB_HOST -u $DB_USER --port $DB_PORT --password=$DB_PASS --database $DB_DATABASE -e "$TEARDOWN_DB_COMMAND" &> /dev/null
 

@@ -1,13 +1,13 @@
 'use strict';
 
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-const controller = require('app/controllers/placeholder');
+import controller = require('app/controllers/placeholder');
 
 router.post('/', controller.createPlaceholder);
 router.get('/', controller.getPlaceholders);
 router.get('/:placeholder_id', controller.getPlaceholder);
 router.get('/:placeholder_id', controller.updatePlaceholder);
 
-module.exports = router;
+export = router;

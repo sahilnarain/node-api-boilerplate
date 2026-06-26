@@ -16,6 +16,16 @@ then
   exit 1
 fi
 
+echo 'Running TypeScript type-check...'
+./node_modules/typescript/bin/tsc --noEmit
+if [ $? -eq 1 ]
+then
+  echo 'Commmit failed - one or more TypeScript type errors found.'
+  echo
+  git stash pop
+  exit 1
+fi
+
 echo "Running OpenAPI spec linter..."
 ./node_modules/@stoplight/spectral-cli/dist/index.js lint docs/api/API_Reference.yaml --ruleset spectral.yaml --quiet
 if [ $? -eq 1 ]

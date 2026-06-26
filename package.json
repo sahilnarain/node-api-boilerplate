@@ -2,7 +2,7 @@
   "name": "node-api-boilerplate",
   "version": "1.0.0",
   "description": "Boilerplate code for NodeJS APIs",
-  "main": "server.js",
+  "main": "dist/js/server.js",
   "directories": {
     "doc": "docs",
     "test": "tests"
@@ -14,19 +14,26 @@
     "express": "^4.22.1",
     "knex": "^2.5.1",
     "morgan": "^1.10.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "undici": "^8.5.0"
   },
   "devDependencies": {
     "@apidevtools/swagger-parser": "^12.1.0",
     "@stoplight/spectral-cli": "^6.15.0",
+    "@types/body-parser": "^1.19.6",
+    "@types/compression": "^1.8.1",
+    "@types/express": "^5.0.6",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^26.0.1",
     "esbuild": "^0.25.12",
     "husky": "^7.0.4",
-    "prettier": "^2.8.8"
+    "prettier": "^2.8.8",
+    "typescript": "^6.0.3"
   },
   "scripts": {
     "test": "./scripts/tests.sh",
-    "test-server": "NODE_ENV=test;node server.js",
-    "start": "node server.js",
+    "test-server": "NODE_ENV=test NODE_PATH=./dist/js node dist/js/server.js",
+    "start": "NODE_PATH=./dist/js node dist/js/server.js",
     "git-check": "./scripts/npm/git-check.sh",
     "beautify": "./scripts/beautify.sh",
     "dist": "./scripts/dist.sh",
