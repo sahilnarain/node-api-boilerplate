@@ -29,7 +29,7 @@ const sortByDesc = (key) => {
   return (array1, array2) => (array1[key] < array2[key] ? 1 : array2[key] < array1[key] ? -1 : 0);
 };
 
-const prepareFetchOptions = async (options) => {
+const prepareFetchOptions = (options) => {
   if (options.method.toUpperCase() === 'GET') {
     delete options.body;
     options.qs && Object.keys(options.qs).length ? (options.url += '?' + new URLSearchParams(options.qs)) : null;
